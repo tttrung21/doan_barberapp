@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "547981406167",
+    "project_id": "barbershop-ee46a",
+    "storage_bucket": "barbershop-ee46a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547981406167:android:fb5a7056b8cb6eca032592",
+        "android_client_info": {
+          "package_name": "com.example.doan_barberapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAeGXkDiLlYrDUlk2W93h9N-xUiaVIths"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
