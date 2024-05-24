@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doan_barberapp/components/skin/color_skin.dart';
 import 'package:doan_barberapp/components/skin/typo_skin.dart';
 import 'package:doan_barberapp/components/widget/icon.dart';
 import 'package:doan_barberapp/project/account/auth/Login.dart';
 import 'package:doan_barberapp/project/account/profile/ui/PersonalProfile.dart';
-import 'package:doan_barberapp/project/account/profile/ui/StaffHistory.dart';
 import 'package:doan_barberapp/project/account/profile/ui/StaffInfo.dart';
 import 'package:doan_barberapp/project/account/profile/widgets/AccountName.dart';
 import 'package:doan_barberapp/project/booking/widgets/CommonDialog.dart';
@@ -12,7 +12,6 @@ import 'package:doan_barberapp/shared/bloc/auth_bloc/auth_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,33 +80,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: Column(
                 children: [
-                  Center(
-                    child: SizedBox(
-                      height: 115,
-                      width: 115,
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        fit: StackFit.expand,
-                        children: [
-                          state.profile == null ||
-                                  state.profile?.profilePic == ''
-                              ? CircleAvatar(
-                                  radius: 40,
-                                  child: Image.asset(
-                                    'assets/images/placeholder_avatar.png',
-                                    width: 100,
-                                    fit: BoxFit.cover,
-                                  ))
-                              : BuildAvatarWithUrl(state.profile!.profilePic!,
-                                  size: 80),
-                        ],
-                      ),
-                    ),
-                  ),
-                  AccountNameSection(
-                      currentName: state.profile == null
-                          ? S.of(context).profile_Khach
-                          : state.profile?.name),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .where('uid', isEqualTo: state.profile?.uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        final data = snapshot.data?.docs[0];
+                        return Center(
+                          child: SizedBox(
+                            height: 115,
+                            width: 115,
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              fit: StackFit.expand,
+                              children: [
+                                state.profile == null ||
+                                        data?['profilePic'] == ''
+                                    ? CircleAvatar(
+                                        radius: 40,
+                                        child: Image.asset(
+                                          'assets/images/placeholder_avatar.png',
+                                          width: 100,
+                                          fit: BoxFit.cover,
+                                        ))
+                                    : BuildAvatarWithUrl(data?['profilePic'],
+                                        size: 80),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .where('uid', isEqualTo: state.profile?.uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        return AccountNameSection(
+                            currentName: snapshot.data?.docs[0] == null
+                                ? S.of(context).profile_Khach
+                                : snapshot.data?.docs[0]['name']);
+                      }),
                   CupertinoButton(
                     padding: EdgeInsets.zero,
                     child: Row(
@@ -170,8 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         )
                       ],
                     ),
-                    onPressed: () =>_onChangeLangs(context)
-                    ,
+                    onPressed: () => _onChangeLangs(context),
                   ),
                   CupertinoButton(
                     padding: EdgeInsets.zero,

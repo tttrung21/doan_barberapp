@@ -1,15 +1,12 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doan_barberapp/components/widget/app_bar.dart';
 import 'package:doan_barberapp/shared/models/UserModel.dart';
 import 'package:doan_barberapp/shared/repository/UserRepository.dart';
 import 'package:doan_barberapp/utils/Loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -87,7 +84,6 @@ class _EditProfileState extends State<EditProfile> {
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (pickedImage != null) {
         image = File(pickedImage.path);
-        print(image);
       }
     } catch (e) {
       SnackBarCore.fail(title: 'Error picking image');
@@ -139,7 +135,7 @@ class _EditProfileState extends State<EditProfile> {
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Stack(
@@ -178,7 +174,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 100,
                       ),
                       Padding(
@@ -284,8 +280,7 @@ class _EditProfileState extends State<EditProfile> {
                                           dob: dobTEC.text ?? user?.dob,
                                           name: nameTEC.text ?? user?.name,
                                           profilePic: user?.profilePic,
-                                          phoneNumber: phoneTEC.text ??
-                                              user?.phoneNumber,
+                                          phoneNumber: phoneTEC.text ?? user?.phoneNumber,
                                           role: user?.role,
                                           password: user?.password,
                                           email: user?.email),
@@ -363,7 +358,7 @@ class _EditProfileState extends State<EditProfile> {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         FTextFormField(

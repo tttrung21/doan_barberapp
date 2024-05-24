@@ -189,9 +189,9 @@ class PersonalProfile extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 12,),
+              const SizedBox(height: 12,),
               CupertinoButton(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 color: FColorSkin.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
