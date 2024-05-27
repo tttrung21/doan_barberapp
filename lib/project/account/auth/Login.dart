@@ -28,7 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController nameTEC = TextEditingController();
   TextEditingController passwordTEC = TextEditingController();
   AuthRepository authRepository = AuthRepository();
-  bool guest = false;
+  bool guest = true;
 
   @override
   void dispose() {
@@ -57,16 +57,6 @@ class _SignInScreenState extends State<SignInScreen> {
             }
             if (state is AuthError) {
               SnackBarCore.fail(title: state.message ?? S.of(context).common_LoiXayRa);
-              // showDialog(
-              //     context: context,
-              //     builder: (context) => AlertDialog(
-              //       content: Container(
-              //         padding: EdgeInsets.all(4),
-              //         decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(15)),
-              //         child: Text(state.message ?? S.of(context).common_LoiXayRa),
-              //       ),
-              //     ));
             }
           },
           builder: (context, state) {
@@ -226,25 +216,25 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     const SizedBox(height: 5,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Divider(
-                          indent: MediaQuery.of(context).size.width * 0.4,
-                        ),
-                        Text(S.of(context).auth_Hoac,),
-                        Divider(
-                          indent: MediaQuery.of(context).size.width * 0.4,
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 5,),
-                    TextButton(
-                        onPressed: () {
-                          guest = true;
-                          context.read<AuthBloc>().add(GuestLoginEvent());
-                        },
-                        child: Text(S.of(context).auth_DangNhapKhach,)),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Divider(
+                    //       indent: MediaQuery.of(context).size.width * 0.4,
+                    //     ),
+                    //     Text(S.of(context).auth_Hoac,),
+                    //     Divider(
+                    //       indent: MediaQuery.of(context).size.width * 0.4,
+                    //     )
+                    //   ],
+                    // ),
+                    // const SizedBox(height: 5,),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       guest = true;
+                    //       context.read<AuthBloc>().add(GuestLoginEvent());
+                    //     },
+                    //     child: Text(S.of(context).auth_DangNhapKhach,)),
                     // Container(
                     //   margin: const EdgeInsets.symmetric(
                     //       horizontal: 10, vertical: 5),

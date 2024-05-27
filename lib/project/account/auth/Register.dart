@@ -49,16 +49,6 @@ class _RegisterState extends State<Register> {
               }
               if (state is AuthError) {
                 SnackBarCore.fail(title: state.message ?? S.of(context).common_LoiXayRa);
-                // showDialog(
-                //     context: context,
-                //     builder: (context) => AlertDialog(
-                //           content: Container(
-                //             padding: EdgeInsets.all(4),
-                //             decoration: BoxDecoration(
-                //                 borderRadius: BorderRadius.circular(15)),
-                //             child: Text(state.message ?? ''),
-                //           ),
-                //         ));
               }
             },
             listenWhen: (previous, current) => current is AuthSuccess || current is AuthError,

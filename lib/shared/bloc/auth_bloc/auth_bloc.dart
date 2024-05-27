@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final bool auth = await isAuth();
     print('auth: $auth');
     if (!auth) {
-      emit(UnauthenticatedState());
+      emit(AuthSuccess(user: state.profile));
     } else {
       state.profile = await userRepository.fetchUser();
       emit(AuthSuccess(user: state.profile));
@@ -35,7 +35,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onGuest(GuestLoginEvent event, Emitter<AuthState> emit) async {
     await authRepository.guestMode();
-    emit(UnauthenticatedState());
     emit(AuthSuccess(user: state.profile));
   }
 

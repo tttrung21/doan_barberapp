@@ -9,7 +9,6 @@ import 'package:doan_barberapp/project/account/profile/widgets/AccountName.dart'
 import 'package:doan_barberapp/project/booking/widgets/CommonDialog.dart';
 import 'package:doan_barberapp/shared/bloc/auth_bloc/auth_bloc.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,8 +29,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final auth = FirebaseAuth.instance.currentUser;
-  final guest = FirebaseAuth.instance.currentUser?.isAnonymous;
   bool isVietnamese = true;
 
   Future<void> _load() async {
@@ -80,37 +77,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
               child: Column(
                 children: [
-                  StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('users')
-                          .where('uid', isEqualTo: state.profile?.uid)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        final data = snapshot.data?.docs[0];
-                        return Center(
-                          child: SizedBox(
-                            height: 115,
-                            width: 115,
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              fit: StackFit.expand,
-                              children: [
-                                state.profile == null ||
-                                        data?['profilePic'] == ''
-                                    ? CircleAvatar(
-                                        radius: 40,
-                                        child: Image.asset(
-                                          'assets/images/placeholder_avatar.png',
-                                          width: 100,
-                                          fit: BoxFit.cover,
-                                        ))
-                                    : BuildAvatarWithUrl(data?['profilePic'],
+                  state.profile == null
+                      ? CircleAvatar(
+                          radius: 58,
+                          child: Image.asset(
+                            'assets/images/placeholder_avatar.png',
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ))
+                      : StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .where('uid', isEqualTo: state.profile?.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            final data = snapshot.data?.docs[0];
+                            if(data?['profilePic'] == '') {
+                              return CircleAvatar(
+                                  radius: 58,
+                                  child: Image.asset(
+                                    'assets/images/placeholder_avatar.png',
+                                    width: 100,
+                                    fit: BoxFit.cover,
+                                  ));
+                            }
+                            return Center(
+                              child: SizedBox(
+                                height: 115,
+                                width: 115,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  fit: StackFit.expand,
+                                  children: [
+                                    BuildAvatarWithUrl(
+                                        data?['profilePic'] ?? '',
                                         size: 80),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
                   StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('users')
@@ -118,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           .snapshots(),
                       builder: (context, snapshot) {
                         return AccountNameSection(
-                            currentName: snapshot.data?.docs[0] == null
+                            currentName: state.profile == null
                                 ? S.of(context).profile_Khach
                                 : snapshot.data?.docs[0]['name']);
                       }),
@@ -228,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          auth!.isAnonymous
+                          state.profile == null
                               ? S.of(context).profile_DangNhap
                               : S.of(context).profile_DangXuat,
                           style: FTypoSkin.label1

@@ -49,8 +49,7 @@ class _BTSSystemSPState extends State<BTSService> {
 
   bool checkChosenService(DropdownItem item) {
     if (_selectedService != null) {
-      if (
-          ( _selectedService!.any((element) => element == item))) {
+      if (( _selectedService!.any((element) => element == item))) {
         return true;
       }
     }
@@ -159,7 +158,7 @@ class _BTSSystemSPState extends State<BTSService> {
                         for (var item in _listSearch ?? <DropdownItem>[]) ...[
                           CupertinoButton(
                             onPressed: () {
-
+                              print('press');
                               if(isFirstItem!) {
                                 _selectedService = [];
                                 isFirstItem = false;
@@ -169,9 +168,7 @@ class _BTSSystemSPState extends State<BTSService> {
                               } else {
                                 _selectedService?.add(item);
                               }
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                             padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                             child: Row(
@@ -198,14 +195,16 @@ class _BTSSystemSPState extends State<BTSService> {
                                     value: checkChosenService(item),
                                     onChanged: (value) {
                                       print(value);
+                                      if(isFirstItem!) {
+                                        _selectedService = [];
+                                        isFirstItem = false;
+                                      }
                                       if (checkChosenService(item)) {
                                         _selectedService?.remove(item);
                                       } else {
                                         _selectedService?.add(item);
                                       }
-                                      setState(() {
-
-                                      });
+                                      setState(() {});
                                     })
                               ],
                             ),

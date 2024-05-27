@@ -188,6 +188,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         if (res != null) {
                           listService = res;
                           services = '';
+                          serviceTEC.text = '';
                           estimatedFee = 0;
                           isFirstService = true;
                           for (DropdownItem item in listService!) {
@@ -203,6 +204,8 @@ class _BookingScreenState extends State<BookingScreen> {
                               services == '' ? serviceTEC.text : services;
                         }
                         setState(() {});
+                        print(services);
+                        print(serviceTEC.text);
                       }
                     }),
                 if (listService != null)

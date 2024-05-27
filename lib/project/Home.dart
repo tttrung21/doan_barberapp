@@ -29,8 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int indexScreen = 0;
   List<Widget> listScreen = [];
 
-  final guest = FirebaseAuth.instance.currentUser?.isAnonymous;
-
   changeScreen(int index) {
     setState(() {
       indexScreen = index;
@@ -72,8 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 children: [
                   BlocConsumer<AuthBloc, AuthState>(
-                    listenWhen: (previous, current) =>
-                        current is UnauthenticatedState,
+                    listenWhen: (previous, current) => current is UnauthenticatedState,
                     listener: (context, state) {
                       Navigator.pushAndRemoveUntil(
                           context,
@@ -85,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       return CustomBottomBarButton(
                         text: S.of(context).booking_DatNgay,
                         press: () async {
-                          if (guest == true) {
+                          if (state.profile == null) {
                             showDialog(
                               context: context,
                               builder: (context) => CommonDialog(

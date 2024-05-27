@@ -6,11 +6,13 @@ import 'package:doan_barberapp/components/widget/text_button.dart';
 import 'package:doan_barberapp/shared/models/AppointmentItem.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../components/skin/color_skin.dart';
 import '../../../../components/skin/typo_skin.dart';
 import '../../../../components/style/icon_data.dart';
 import '../../../../generated/l10n.dart';
+import '../../../../shared/bloc/auth_bloc/auth_bloc.dart';
 import '../../../../shared/constant.dart';
 
 class StaffHistory extends StatefulWidget {
@@ -21,7 +23,6 @@ class StaffHistory extends StatefulWidget {
 }
 
 class _StaffHistoryState extends State<StaffHistory> {
-  final _auth = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -52,56 +53,50 @@ class _StaffHistoryState extends State<StaffHistory> {
       backgroundColor: FColorSkin.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            _auth!.isAnonymous
-                ? Center(
-                    child: Text(S.of(context).common_DNTruoc),
-                  )
-                : Column(
-                    children: [
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('appointments')
-                              .where('barberId', isEqualTo: _auth.uid)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return buildLoading();
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                child: Text(S.of(context).common_LoiXayRa),
-                              );
-                            } else if (!snapshot.hasData ||
-                                snapshot.data == null ||
-                                snapshot.data!.docs.isEmpty) {
-                              return BuildEmptyData(title: S.of(context).common_DuLieuTrong);
-                            }
-                            final appointmentDocs = snapshot.data?.docs;
-                            return ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              shrinkWrap: true,
-                              itemCount: appointmentDocs?.length ?? 0,
-                              itemBuilder: (context, index) {
-                                return appointmentCard(
-                                    AppointmentItem.fromDocument(
-                                        appointmentDocs?[index] as DocumentSnapshot));
-                              },
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(
-                                height: 16,
-                              ),
-                            );
-                          }),
-                    ],
-                  ),
-          ],
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 16,
+                ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('appointments')
+                        .where('barberId', isEqualTo: state.profile?.uid)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return buildLoading();
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text(S.of(context).common_LoiXayRa),
+                        );
+                      } else if (!snapshot.hasData ||
+                          snapshot.data == null ||
+                          snapshot.data!.docs.isEmpty) {
+                        return BuildEmptyData(
+                            title: S.of(context).common_DuLieuTrong);
+                      }
+                      final appointmentDocs = snapshot.data?.docs;
+                      return ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        shrinkWrap: true,
+                        itemCount: appointmentDocs?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return appointmentCard(AppointmentItem.fromDocument(
+                              appointmentDocs?[index] as DocumentSnapshot));
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 16,
+                        ),
+                      );
+                    }),
+              ],
+            );
+          },
         ),
       ),
     );
