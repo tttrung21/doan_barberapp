@@ -14,13 +14,13 @@ class PopularCuts extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: [
-            PopularCutCard(haircut: PopularCutItem(imageUrl: 'assets/images/BuzzCut.jpg',title: 'Buzz Cut')),
+            PopularCutCard(haircut: PopularCutItem(imageUrl: 'https://www.liveabout.com/thmb/kwUlFmtrrE-86-oLV4TWgVMEtaI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/zayn-01-56a610a95f9b58b7d0dfbf46.jpg',title: 'Buzz Cut')),
             const SizedBox(width: 16,),
-            PopularCutCard(haircut: PopularCutItem(imageUrl: 'assets/images/Pompadour.jpg',title: 'Pompadour')),
+            PopularCutCard(haircut: PopularCutItem(imageUrl: 'https://barbershopvutri.com/wp-content/uploads/2020/05/mau-toc-nam-dep-pompadour-2.jpg',title: 'Pompadour')),
             const SizedBox(width: 16,),
-            PopularCutCard(haircut: PopularCutItem(imageUrl: 'assets/images/CombOver.jpg',title: 'Comb Over')),
+            PopularCutCard(haircut: PopularCutItem(imageUrl: 'https://www.apetogentleman.com/wp-content/uploads/2022/06/cof-classic-4-720x900.jpg',title: 'Comb Over')),
             const SizedBox(width: 16,),
-            PopularCutCard(haircut: PopularCutItem(imageUrl: 'assets/images/FauxHawk.jpeg',title: 'Faux Hawk')),
+            PopularCutCard(haircut: PopularCutItem(imageUrl: 'https://barbershopvutri.com/wp-content/uploads/2020/07/David-Beckham-Faux-Hawk-Haircut.jpg',title: 'Faux Hawk')),
           ],
         ),
       ),

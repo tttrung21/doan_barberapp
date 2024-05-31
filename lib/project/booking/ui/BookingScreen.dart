@@ -394,7 +394,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                       appointmentId: '',
                                       barberName: pickedBarber,
                                       services: services,
-                                      estimatedFee: estimatedFee));
+                                      estimatedFee: estimatedFee,
+                                      isCancelled: 0));
                               await Future.delayed(const Duration(seconds: 0));
                               if (context.mounted) {
                                 Navigator.of(context).pop();

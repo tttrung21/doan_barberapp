@@ -102,7 +102,7 @@ class _ViewFileState extends State<ViewFile> {
           widget.fileType == 'jpeg' || widget.fileType == 'png' || widget.fileType == 'jpg'
               ? SizedBox(height: MediaQuery.of(context).padding.top)
               : Image.asset(
-                  'lib/Assets/Images/BG_Home.png',
+                  'assets/images/barber_bg.jpg',
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width,
                   height: 72 + MediaQuery.of(context).padding.top,

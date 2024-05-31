@@ -3,6 +3,7 @@ import 'package:doan_barberapp/project/booking/widgets/CommonDialog.dart';
 import 'package:doan_barberapp/project/service/ui/ServiceScreen.dart';
 import 'package:doan_barberapp/shared/bloc/language_cubit.dart';
 import 'package:doan_barberapp/shared/bloc/language_cubit.dart';
+import 'package:doan_barberapp/shared/repository/DataRepository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -101,11 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           } else {
                             LoadingCore.loadingDialogIos(context);
-                            final barberDocs = await FirebaseFirestore.instance
-                                .collection('users')
-                                .where('role', isEqualTo: 'barber')
-                                .get();
-                            final docs = barberDocs.docs;
+                            final docs = await DataRepository().getBarbers();
                             if (context.mounted) {
                               Navigator.of(context).pop();
                               Navigator.of(context).push(MaterialPageRoute(

@@ -1,28 +1,57 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doan_barberapp/components/style/elevation.dart';
 import 'package:doan_barberapp/components/widget/app_bar.dart';
+import 'package:doan_barberapp/components/widget/filled_button.dart';
 import 'package:doan_barberapp/components/widget/icon.dart';
 import 'package:doan_barberapp/components/widget/text_button.dart';
 import 'package:doan_barberapp/shared/models/AppointmentItem.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../Utils/Loading.dart';
 import '../../../../components/skin/color_skin.dart';
 import '../../../../components/skin/typo_skin.dart';
 import '../../../../components/style/icon_data.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../shared/bloc/auth_bloc/auth_bloc.dart';
 import '../../../../shared/constant.dart';
+import '../../../booking/widgets/CommonDialog.dart';
 
 class StaffHistory extends StatefulWidget {
-  const StaffHistory({super.key});
+  const StaffHistory({super.key, this.id});
+
+  final int? id;
 
   @override
   State<StaffHistory> createState() => _StaffHistoryState();
 }
 
 class _StaffHistoryState extends State<StaffHistory> {
+  Color getColor(int? id) {
+    switch (id) {
+      case 1:
+        return FColorSkin.warning;
+      case 2:
+        return FColorSkin.error;
+      case 3:
+        return FColorSkin.success;
+      default:
+        return FColorSkin.subtitle;
+    }
+  }
+
+  String getStatus(int? id) {
+    switch (id) {
+      case 1:
+        return S.of(context).history_DangCho;
+      case 2:
+        return S.of(context).history_DaHuy;
+      case 3:
+        return S.of(context).history_HoanThanh;
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +74,13 @@ class _StaffHistoryState extends State<StaffHistory> {
         title: Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
-            S.of(context).profile_LichSuNhanVien,
+            widget.id == 0
+                ? S.of(context).staffInfo_HenSapToi
+                : widget.id == 1
+                    ? S.of(context).staffInfo_HenChoDuyet
+                    : widget.id == 2
+                        ? S.of(context).staffInfo_HenDaHuy
+                        : S.of(context).staffInfo_HenHoanThanh,
             style: FTypoSkin.title2.copyWith(color: FColorSkin.title),
           ),
         ),
@@ -64,6 +99,7 @@ class _StaffHistoryState extends State<StaffHistory> {
                     stream: FirebaseFirestore.instance
                         .collection('appointments')
                         .where('barberId', isEqualTo: state.profile?.uid)
+                        .where('isCancelled', isEqualTo: widget.id)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -104,7 +140,7 @@ class _StaffHistoryState extends State<StaffHistory> {
 
   Widget appointmentCard(AppointmentItem item) {
     return Container(
-      padding: EdgeInsets.fromLTRB(4, 8, 8, 8),
+      padding: EdgeInsets.fromLTRB(4, 8, 0, 8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: FColorSkin.white,
@@ -132,9 +168,29 @@ class _StaffHistoryState extends State<StaffHistory> {
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${item.bookedDate} - ${item.bookedTime}',
-                    style: FTypoSkin.title3.copyWith(color: FColorSkin.title),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${item.bookedDate} - ${item.bookedTime}',
+                        style:
+                            FTypoSkin.title5.copyWith(color: FColorSkin.title),
+                      ),
+                      if (item.isCancelled != 0)
+                        Container(
+                          padding: EdgeInsets.only(left: 4),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  bottomLeft: Radius.circular(8)),
+                              color: getColor(item.isCancelled)),
+                          child: Text(
+                            getStatus(item.isCancelled),
+                            style: FTypoSkin.subtitle3
+                                .copyWith(color: FColorSkin.white),
+                          ),
+                        )
+                    ],
                   ),
                   SizedBox(
                     height: 8,
@@ -154,11 +210,14 @@ class _StaffHistoryState extends State<StaffHistory> {
                         width: 4,
                       ),
                       Expanded(
-                        child: Text(
-                          item.services ?? '',
-                          style: FTypoSkin.bodyText2
-                              .copyWith(color: FColorSkin.subtitle),
-                          softWrap: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            item.services ?? '',
+                            style: FTypoSkin.bodyText2
+                                .copyWith(color: FColorSkin.subtitle),
+                            softWrap: true,
+                          ),
                         ),
                       )
                     ],
@@ -193,7 +252,145 @@ class _StaffHistoryState extends State<StaffHistory> {
                 ],
               ))
             ],
-          )
+          ),
+          if (item.isCancelled == 1 || item.isCancelled == 0)
+            const SizedBox(
+              height: 2,
+            ),
+          if (item.isCancelled == 1)
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: FFilledButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => CommonDialog(
+                          type: EnumTypeDialog.error,
+                          title: S.of(context).history_XacNhanHuy,
+                          cancelTitle: S.of(context).common_QuayLai,
+                          continueTitle: S.of(context).common_XacNhan,
+                          onContinue: () async {
+                            LoadingCore.loadingDialogIos(context);
+                            await FirebaseFirestore.instance
+                                .collection('appointments')
+                                .doc(item.appointmentId)
+                                .update({'isCancelled' : 2});
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            }
+                          },
+                        ),
+                      );
+                    },
+                    backgroundColor: FColorSkin.error,
+                    child: Container(
+                        alignment: Alignment.center, child: Text(S.of(context).history_Huy)),
+                  )),
+                  SizedBox(
+                    width: 4,
+                  ),
+                  Expanded(
+                      child: FFilledButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => CommonDialog(
+                          type: EnumTypeDialog.info,
+                          title: S.of(context).history_XacNhanTiepTuc,
+                          cancelTitle: S.of(context).common_QuayLai,
+                          continueTitle: S.of(context).common_XacNhan,
+                          onContinue: () async {
+                            LoadingCore.loadingDialogIos(context);
+                            await FirebaseFirestore.instance
+                                .collection('appointments')
+                                .doc(item.appointmentId)
+                                .update({'isCancelled' : 0});
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            }
+                          },
+                        ),
+                      );
+                    },
+                    backgroundColor: FColorSkin.info,
+                    child: Container(
+                        alignment: Alignment.center, child: Text(S.of(context).history_TiepTuc)),
+                  )),
+                ],
+              ),
+            ),
+          if (item.isCancelled == 0)
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: FFilledButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => CommonDialog(
+                              type: EnumTypeDialog.error,
+                              title: S.of(context).history_XacNhanHuy,
+                              cancelTitle: S.of(context).common_QuayLai,
+                              continueTitle: S.of(context).common_XacNhan,
+                              onContinue: () async {
+                                LoadingCore.loadingDialogIos(context);
+                                await FirebaseFirestore.instance
+                                    .collection('appointments')
+                                    .doc(item.appointmentId)
+                                    .update({'isCancelled' : 2});
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                            ),
+                          );
+                        },
+                        backgroundColor: FColorSkin.error,
+                        child: Container(
+                            alignment: Alignment.center, child: Text(S.of(context).history_Huy)),
+                      )),
+                  SizedBox(
+                    width: 4,
+                  ),
+                  Expanded(
+                      child: FFilledButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => CommonDialog(
+                              type: EnumTypeDialog.info,
+                              title: S.of(context).history_HoanThanh,
+                              cancelTitle: S.of(context).common_QuayLai,
+                              continueTitle: S.of(context).common_XacNhan,
+                              onContinue: () async {
+                                LoadingCore.loadingDialogIos(context);
+                                await FirebaseFirestore.instance
+                                    .collection('appointments')
+                                    .doc(item.appointmentId)
+                                    .update({'isCancelled' : 3});
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                            ),
+                          );
+                        },
+                        backgroundColor: FColorSkin.info,
+                        child: Container(
+                            alignment: Alignment.center, child: Text(S.of(context).history_HoanThanh)),
+                      )),
+                ],
+              ),
+            ),
         ],
       ),
     );

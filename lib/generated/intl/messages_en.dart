@@ -81,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You haven\'t selected a time slot!"),
         "booking_XacNhan":
             MessageLookupByLibrary.simpleMessage("Confirm Booking"),
+        "common_ApDung": MessageLookupByLibrary.simpleMessage("Apply"),
+        "common_BoLoc": MessageLookupByLibrary.simpleMessage("Filter"),
         "common_Chon": MessageLookupByLibrary.simpleMessage("Choose"),
         "common_ChonNgonNgu":
             MessageLookupByLibrary.simpleMessage("Choose language"),
@@ -120,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "common_Thang8": MessageLookupByLibrary.simpleMessage("August"),
         "common_Thang9": MessageLookupByLibrary.simpleMessage("September"),
         "common_ThanhCong": MessageLookupByLibrary.simpleMessage("Success"),
+        "common_ThietLapLai": MessageLookupByLibrary.simpleMessage("Reset"),
         "common_ThieuThongTin": MessageLookupByLibrary.simpleMessage(
             "Do not leave any information field blank!"),
         "common_ThongBao": MessageLookupByLibrary.simpleMessage("Notification"),
@@ -132,13 +135,27 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search again"),
         "common_ToiDaHieu":
             MessageLookupByLibrary.simpleMessage("I understand"),
+        "common_XacNhan": MessageLookupByLibrary.simpleMessage("Confirm"),
         "common_quy": MessageLookupByLibrary.simpleMessage("Quarter"),
+        "history_ChonBarber":
+            MessageLookupByLibrary.simpleMessage("Choose Barber"),
+        "history_DaDat": MessageLookupByLibrary.simpleMessage("Booked"),
+        "history_DaHuy": MessageLookupByLibrary.simpleMessage("Cancelled"),
+        "history_DangCho": MessageLookupByLibrary.simpleMessage("Pending"),
         "history_DangNhapTruoc": MessageLookupByLibrary.simpleMessage(
             "Log in first to see your history"),
+        "history_HoanThanh": MessageLookupByLibrary.simpleMessage("Finished"),
+        "history_Huy": MessageLookupByLibrary.simpleMessage("Cancel"),
         "history_LichSuCat":
             MessageLookupByLibrary.simpleMessage("Booking History"),
         "history_LichSuTrong": MessageLookupByLibrary.simpleMessage(
             "There\'s no appointment booked"),
+        "history_TiepTuc": MessageLookupByLibrary.simpleMessage("Resume"),
+        "history_TrangThai": MessageLookupByLibrary.simpleMessage("Status"),
+        "history_XacNhanHuy":
+            MessageLookupByLibrary.simpleMessage("Confirm cancel?"),
+        "history_XacNhanTiepTuc":
+            MessageLookupByLibrary.simpleMessage("Confirm resume booking?"),
         "home_CatToc": MessageLookupByLibrary.simpleMessage("Haircut"),
         "home_DatLichNgay": MessageLookupByLibrary.simpleMessage(
             "Schedule your appointment now at"),
@@ -227,6 +244,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "shop_closed":
             MessageLookupByLibrary.simpleMessage("Shop is currently closed!"),
         "shop_opened":
-            MessageLookupByLibrary.simpleMessage("Shop is currently opening!")
+            MessageLookupByLibrary.simpleMessage("Shop is currently opening!"),
+        "staffInfo_ChiTietLichSu":
+            MessageLookupByLibrary.simpleMessage("Detailed History"),
+        "staffInfo_DanhSachLichHen":
+            MessageLookupByLibrary.simpleMessage("List of appointments"),
+        "staffInfo_HenChoDuyet":
+            MessageLookupByLibrary.simpleMessage("Pending appointments"),
+        "staffInfo_HenDaHuy":
+            MessageLookupByLibrary.simpleMessage("Cancelled appointments"),
+        "staffInfo_HenHoanThanh":
+            MessageLookupByLibrary.simpleMessage("Finished appointments"),
+        "staffInfo_HenSapToi":
+            MessageLookupByLibrary.simpleMessage("Incoming appointments")
       };
 }

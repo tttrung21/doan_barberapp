@@ -440,6 +440,46 @@ class S {
     );
   }
 
+  /// `Confirm`
+  String get common_XacNhan {
+    return Intl.message(
+      'Confirm',
+      name: 'common_XacNhan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter`
+  String get common_BoLoc {
+    return Intl.message(
+      'Filter',
+      name: 'common_BoLoc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get common_ThietLapLai {
+    return Intl.message(
+      'Reset',
+      name: 'common_ThietLapLai',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get common_ApDung {
+    return Intl.message(
+      'Apply',
+      name: 'common_ApDung',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Log in`
   String get auth_DangNhap {
     return Intl.message(
@@ -910,6 +950,106 @@ class S {
     );
   }
 
+  /// `Cancel`
+  String get history_Huy {
+    return Intl.message(
+      'Cancel',
+      name: 'history_Huy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resume`
+  String get history_TiepTuc {
+    return Intl.message(
+      'Resume',
+      name: 'history_TiepTuc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get history_DangCho {
+    return Intl.message(
+      'Pending',
+      name: 'history_DangCho',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get history_DaHuy {
+    return Intl.message(
+      'Cancelled',
+      name: 'history_DaHuy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finished`
+  String get history_HoanThanh {
+    return Intl.message(
+      'Finished',
+      name: 'history_HoanThanh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm cancel?`
+  String get history_XacNhanHuy {
+    return Intl.message(
+      'Confirm cancel?',
+      name: 'history_XacNhanHuy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm resume booking?`
+  String get history_XacNhanTiepTuc {
+    return Intl.message(
+      'Confirm resume booking?',
+      name: 'history_XacNhanTiepTuc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booked`
+  String get history_DaDat {
+    return Intl.message(
+      'Booked',
+      name: 'history_DaDat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Barber`
+  String get history_ChonBarber {
+    return Intl.message(
+      'Choose Barber',
+      name: 'history_ChonBarber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get history_TrangThai {
+    return Intl.message(
+      'Status',
+      name: 'history_TrangThai',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Guest`
   String get profile_Khach {
     return Intl.message(
@@ -1165,6 +1305,66 @@ class S {
     return Intl.message(
       'Revenue',
       name: 'profile_DoanhThu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finished appointments`
+  String get staffInfo_HenHoanThanh {
+    return Intl.message(
+      'Finished appointments',
+      name: 'staffInfo_HenHoanThanh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Incoming appointments`
+  String get staffInfo_HenSapToi {
+    return Intl.message(
+      'Incoming appointments',
+      name: 'staffInfo_HenSapToi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled appointments`
+  String get staffInfo_HenDaHuy {
+    return Intl.message(
+      'Cancelled appointments',
+      name: 'staffInfo_HenDaHuy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending appointments`
+  String get staffInfo_HenChoDuyet {
+    return Intl.message(
+      'Pending appointments',
+      name: 'staffInfo_HenChoDuyet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detailed History`
+  String get staffInfo_ChiTietLichSu {
+    return Intl.message(
+      'Detailed History',
+      name: 'staffInfo_ChiTietLichSu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `List of appointments`
+  String get staffInfo_DanhSachLichHen {
+    return Intl.message(
+      'List of appointments',
+      name: 'staffInfo_DanhSachLichHen',
       desc: '',
       args: [],
     );

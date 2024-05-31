@@ -9,9 +9,10 @@ class AppointmentItem{
   String? services;
   String? barberName;
   int? estimatedFee;
-
+  int? isCancelled;
+  /// 0 la default, 1 la pending, 2 la huy, 3 la hoan thanh
   AppointmentItem({
-    this.appointmentId,this.barberId,this.userId,this.bookedDate,this.bookedTime,this.services,this.barberName,this.estimatedFee
+    this.appointmentId,this.barberId,this.userId,this.bookedDate,this.bookedTime,this.services,this.barberName,this.estimatedFee,this.isCancelled
 });
   factory AppointmentItem.fromDocument(DocumentSnapshot document) {
     Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
@@ -23,7 +24,8 @@ class AppointmentItem{
       bookedDate: data?['bookedDate'],
       services: data?['services'],
       barberName: data?['barberName'],
-        estimatedFee: data?['estimatedFee']
+      estimatedFee: data?['estimatedFee'],
+      isCancelled: data?['isCancelled']
     );
   }
 
@@ -36,7 +38,8 @@ class AppointmentItem{
       'bookedDate' : bookedDate,
       'services': services,
       'barberName' : barberName,
-      'estimatedFee' : estimatedFee
+      'estimatedFee' : estimatedFee,
+      'isCancelled' : isCancelled
     };
   }
 }

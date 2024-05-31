@@ -37,7 +37,7 @@ class StaffInfo extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
-            S.of(context).profile_ThongTinTaiKhoan,
+            S.of(context).staffInfo_ChiTietLichSu,
             style: FTypoSkin.title2.copyWith(
                 color: FColorSkin.primary, fontWeight: FontWeight.w500),
           ),
@@ -72,7 +72,7 @@ class StaffInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      S.of(context).profile_LichSuNhanVien,
+                      S.of(context).staffInfo_HenHoanThanh,
                       style: FTypoSkin.label1
                           .copyWith(color: FColorSkin.primary),
                     ),
@@ -80,7 +80,64 @@ class StaffInfo extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => StaffHistory(),));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => StaffHistory(id: 3,),));
+                },
+              ),
+              SizedBox(height: 12,),
+              CupertinoButton(
+                padding: EdgeInsets.all(16),
+                color: FColorSkin.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      S.of(context).staffInfo_HenSapToi,
+                      style: FTypoSkin.label1
+                          .copyWith(color: FColorSkin.primary),
+                    ),
+                    const CupertinoListTileChevron()
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => StaffHistory(id: 0,),));
+                },
+              ),
+              SizedBox(height: 12,),
+              CupertinoButton(
+                padding: EdgeInsets.all(16),
+                color: FColorSkin.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      S.of(context).staffInfo_HenDaHuy,
+                      style: FTypoSkin.label1
+                          .copyWith(color: FColorSkin.primary),
+                    ),
+                    const CupertinoListTileChevron()
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => StaffHistory(id: 2,),));
+                },
+              ),
+              SizedBox(height: 12,),
+              CupertinoButton(
+                padding: EdgeInsets.all(16),
+                color: FColorSkin.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      S.of(context).staffInfo_HenChoDuyet,
+                      style: FTypoSkin.label1
+                          .copyWith(color: FColorSkin.primary),
+                    ),
+                    const CupertinoListTileChevron()
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => StaffHistory(id: 1,),));
                 },
               ),
             ],

@@ -104,6 +104,7 @@ class _ChartState extends State<Chart> {
       final snapshot = await FirebaseFirestore.instance
           .collection('appointments')
           .where('barberId', isEqualTo: _auth?.uid)
+          .where('isCancelled',isEqualTo: 3)
           .get();
 
       if (snapshot.docs.isNotEmpty) {
@@ -139,6 +140,7 @@ class _ChartState extends State<Chart> {
     final data = await FirebaseFirestore.instance
         .collection('appointments')
         .where('barberId', isEqualTo: _auth?.uid)
+        .where('isCancelled',isEqualTo: 3)
         .get();
     final docs = data.docs;
     for (var element in docs) {

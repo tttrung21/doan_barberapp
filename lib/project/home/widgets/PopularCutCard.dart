@@ -1,4 +1,5 @@
 import 'package:doan_barberapp/shared/models/PopularCutItem.dart';
+import 'package:doan_barberapp/utils/ViewFile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -14,9 +15,17 @@ class PopularCutCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width*140/486,
+        width: MediaQuery.of(context).size.width * 140 / 486,
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ViewFile(
+                  url: haircut.imageUrl!,
+                  fileType: 'jpg',
+                  filePath: '',
+                  fileName: ''),
+            ));
+          },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -25,7 +34,7 @@ class PopularCutCard extends StatelessWidget {
                 height: 150,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
+                  child: Image.network(
                     haircut.imageUrl ?? '',
                     fit: BoxFit.cover,
                   ),
@@ -38,7 +47,8 @@ class PopularCutCard extends StatelessWidget {
                 children: [
                   Text(
                     haircut.title ?? '',
-                    style: FTypoSkin.label3.copyWith(color: ColorScheme.fromSwatch().primary),
+                    style: FTypoSkin.label3
+                        .copyWith(color: ColorScheme.fromSwatch().primary),
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
@@ -48,7 +58,8 @@ class PopularCutCard extends StatelessWidget {
                       height: 24,
                       width: 24,
                       decoration: BoxDecoration(
-                        color: ColorScheme.fromSwatch().primary.withOpacity(0.15),
+                        color:
+                            ColorScheme.fromSwatch().primary.withOpacity(0.15),
                         shape: BoxShape.circle,
                       ),
                       child: SvgPicture.asset(
@@ -64,5 +75,4 @@ class PopularCutCard extends StatelessWidget {
       ),
     );
   }
-
 }

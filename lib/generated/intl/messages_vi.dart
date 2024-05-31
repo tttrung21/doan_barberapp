@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bạn chưa chọn khung giờ!"),
         "booking_XacNhan":
             MessageLookupByLibrary.simpleMessage("Xác nhận đặt hẹn"),
+        "common_ApDung": MessageLookupByLibrary.simpleMessage("Áp dụng"),
+        "common_BoLoc": MessageLookupByLibrary.simpleMessage("Bộ lọc"),
         "common_Chon": MessageLookupByLibrary.simpleMessage("Chọn"),
         "common_ChonNgonNgu":
             MessageLookupByLibrary.simpleMessage("Chọn ngôn ngữ"),
@@ -118,6 +120,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "common_Thang8": MessageLookupByLibrary.simpleMessage("Tháng 8"),
         "common_Thang9": MessageLookupByLibrary.simpleMessage("Tháng 9"),
         "common_ThanhCong": MessageLookupByLibrary.simpleMessage("Thành công"),
+        "common_ThietLapLai":
+            MessageLookupByLibrary.simpleMessage("Thiết lập lại"),
         "common_ThieuThongTin":
             MessageLookupByLibrary.simpleMessage("Thiếu thông tin"),
         "common_ThongBao": MessageLookupByLibrary.simpleMessage("Thông báo"),
@@ -129,13 +133,28 @@ class MessageLookup extends MessageLookupByLibrary {
         "common_TimKiemKhac":
             MessageLookupByLibrary.simpleMessage("Tìm kiếm khác"),
         "common_ToiDaHieu": MessageLookupByLibrary.simpleMessage("Tôi đã hiểu"),
+        "common_XacNhan": MessageLookupByLibrary.simpleMessage("Xác nhận"),
         "common_quy": MessageLookupByLibrary.simpleMessage("Quý"),
+        "history_ChonBarber":
+            MessageLookupByLibrary.simpleMessage("Chọn barber"),
+        "history_DaDat": MessageLookupByLibrary.simpleMessage("Đã đặt"),
+        "history_DaHuy": MessageLookupByLibrary.simpleMessage("Đã hủy"),
+        "history_DangCho": MessageLookupByLibrary.simpleMessage("Đang chờ hủy"),
         "history_DangNhapTruoc": MessageLookupByLibrary.simpleMessage(
             "Đăng nhập để xem lịch sử của bạn"),
+        "history_HoanThanh":
+            MessageLookupByLibrary.simpleMessage("Đã hoàn thành"),
+        "history_Huy": MessageLookupByLibrary.simpleMessage("Hủy"),
         "history_LichSuCat":
             MessageLookupByLibrary.simpleMessage("Lịch sử cắt"),
         "history_LichSuTrong":
             MessageLookupByLibrary.simpleMessage("Không có lịch sử cắt"),
+        "history_TiepTuc": MessageLookupByLibrary.simpleMessage("Tiếp tục đặt"),
+        "history_TrangThai": MessageLookupByLibrary.simpleMessage("Trạng thái"),
+        "history_XacNhanHuy":
+            MessageLookupByLibrary.simpleMessage("Xác nhận hủy?"),
+        "history_XacNhanTiepTuc":
+            MessageLookupByLibrary.simpleMessage("Xác nhận tiếp tục đặt?"),
         "home_CatToc": MessageLookupByLibrary.simpleMessage("Cắt tóc"),
         "home_DatLichNgay":
             MessageLookupByLibrary.simpleMessage("Lên lịch cắt tóc ngay tại"),
@@ -224,6 +243,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "shop_closed":
             MessageLookupByLibrary.simpleMessage("Cửa hàng đang đóng cửa!"),
         "shop_opened":
-            MessageLookupByLibrary.simpleMessage("Cửa hàng đang mở cửa!")
+            MessageLookupByLibrary.simpleMessage("Cửa hàng đang mở cửa!"),
+        "staffInfo_ChiTietLichSu":
+            MessageLookupByLibrary.simpleMessage("Chi tiết lịch sử"),
+        "staffInfo_DanhSachLichHen":
+            MessageLookupByLibrary.simpleMessage("Danh sách lịch hẹn"),
+        "staffInfo_HenChoDuyet":
+            MessageLookupByLibrary.simpleMessage("Lịch hẹn chờ duyệt"),
+        "staffInfo_HenDaHuy":
+            MessageLookupByLibrary.simpleMessage("Lịch hẹn đã hủy"),
+        "staffInfo_HenHoanThanh":
+            MessageLookupByLibrary.simpleMessage("Lịch hẹn hoàn thành"),
+        "staffInfo_HenSapToi":
+            MessageLookupByLibrary.simpleMessage("Lịch hẹn sắp tới")
       };
 }
