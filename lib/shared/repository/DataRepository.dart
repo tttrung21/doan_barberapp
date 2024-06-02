@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doan_barberapp/common/DropdownItem.dart';
 import 'package:doan_barberapp/components/widget/SnackBar.dart';
 import 'package:doan_barberapp/shared/models/AppointmentItem.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DataRepository {
   final _firestore = FirebaseFirestore.instance;
-
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
   Future<void> bookAppointment(AppointmentItem appointment) async {
     try {
       await _firestore.collection('appointments').add({
@@ -31,11 +36,35 @@ class DataRepository {
         data.docs.map((doc) => doc.data()).toList());
     return dropdownItems;
   }
+  
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getBarbers()async{
     final barberDocs = await FirebaseFirestore.instance
         .collection('users')
         .where('role', isEqualTo: 'barber')
         .get();
     return barberDocs.docs;
+  }
+
+  Future<void> saveImage({File? file}) async{
+    try {
+      String? img;
+      if(file != null) {
+        await storeImgToGalleryStorage('imageGallery/${_firebaseAuth.currentUser?.uid}', file).then((value) {
+          if(value != null){
+            img = value;
+          }
+        });
+      }
+      await _firestore.collection('gallery').add({'image': img });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> storeImgToGalleryStorage(String ref, File file) async {
+    UploadTask uploadTask = _storage.ref().child(ref).putFile(file);
+    TaskSnapshot taskSnapshot = await uploadTask;
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 }

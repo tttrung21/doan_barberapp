@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:doan_barberapp/components/skin/color_skin.dart';
 import 'package:doan_barberapp/firebase_options.dart';
@@ -20,6 +21,7 @@ import 'generated/l10n.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Alarm.init();
   runApp( MyApp());
 }
 

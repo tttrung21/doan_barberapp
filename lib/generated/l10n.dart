@@ -720,6 +720,16 @@ class S {
     );
   }
 
+  /// `Image Gallery`
+  String get gallery_ThuVienAnh {
+    return Intl.message(
+      'Image Gallery',
+      name: 'gallery_ThuVienAnh',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Book now`
   String get booking_DatNgay {
     return Intl.message(

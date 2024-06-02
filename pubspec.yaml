@@ -37,6 +37,7 @@ dependencies:
   webview_flutter: ^4.7.0
   easy_localization: ^3.0.6
   syncfusion_flutter_charts: ^25.2.4
+  alarm: ^3.1.4
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +54,7 @@ flutter:
     - assets/images/services/
     - assets/icons/icons/
     - assets/SVG/
+    - assets/audio/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

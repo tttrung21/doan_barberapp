@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doan_barberapp/common/DropdownItem.dart';
 import 'package:doan_barberapp/components/style/button_size.dart';
@@ -47,28 +50,38 @@ class _BookingScreenState extends State<BookingScreen> {
   String services = '';
   List<DropdownItem>? listService;
   bool isFirstService = true;
+  AlarmSettings? alarmSettings;
 
   List<QueryDocumentSnapshot>? listBarber;
-  DateTime now = DateTime.now();
+  DateTime now = DateTime.now(); // tg hien tai
+  DateTime? temp; //thoi gian luu
 
   TextEditingController serviceTEC = TextEditingController();
   TextEditingController dateTEC = TextEditingController();
   TextEditingController timeSlotTEC = TextEditingController();
 
-  Future<void> showFDatePicker(
-      TextEditingController controller, String title) async {
+  Future<void> showFDatePicker(TextEditingController controller,
+      String title) async {
     await showFMBS(
-            context: context,
-            builder: (context) => FDatePicker(title,
-                buttonTitle: S.of(context).common_Chon,
+        context: context,
+        builder: (context) =>
+            FDatePicker(title,
+                buttonTitle: S
+                    .of(context)
+                    .common_Chon,
                 controller: controller,
-                minimumDate: now.copyWith(hour: 0,minute: 0,second: 0,millisecond: 0,microsecond: 0),
+                minimumDate: now.copyWith(hour: 0,
+                    minute: 0,
+                    second: 0,
+                    millisecond: 0,
+                    microsecond: 0),
                 initDateTime: controller.text.isEmpty
                     ? now
                     : DateTime.parse(
-                        FDate.yMd(controller.text.replaceAll('/', '-')))))
+                    FDate.yMd(controller.text.replaceAll('/', '-')))))
         .then((value) {
       if (value is DateTime) {
+        temp = value;
         datePicked = FDate.dMy(value);
         controller.text = datePicked!;
       }
@@ -76,11 +89,11 @@ class _BookingScreenState extends State<BookingScreen> {
     });
   }
 
-  Future<bool> isTimeSlotBooked(
-      String? date, String? timeSlot, String? barberId) async {
+  Future<bool> isTimeSlotBooked(String? date, String? timeSlot,
+      String? barberId) async {
     try {
       // Get the current date and time
-      if(date != null) {
+      if (date != null) {
         DateTime now = DateTime.now();
         DateTime selectedDate = DateTime.parse(
             FDate.yMd(date.replaceAll('/', '-')));
@@ -144,9 +157,11 @@ class _BookingScreenState extends State<BookingScreen> {
           backgroundColor: FColorSkin.primary,
           titleSpacing: 0,
           title: Text(
-            S.of(context).booking_DatLichHen,
+            S
+                .of(context)
+                .booking_DatLichHen,
             style:
-                FTypoSkin.title2.copyWith(color: FColorSkin.white, height: 0),
+            FTypoSkin.title2.copyWith(color: FColorSkin.white, height: 0),
           ),
         ),
         body: SingleChildScrollView(
@@ -158,8 +173,12 @@ class _BookingScreenState extends State<BookingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _dateField(
-                    title: S.of(context).booking_DichVu,
-                    hintText: S.of(context).booking_HintDichVu,
+                    title: S
+                        .of(context)
+                        .booking_DichVu,
+                    hintText: S
+                        .of(context)
+                        .booking_HintDichVu,
                     controller: serviceTEC,
                     isRequire: false,
                     isEnable: true,
@@ -173,14 +192,15 @@ class _BookingScreenState extends State<BookingScreen> {
                         Navigator.pop(context);
                       }
                       List<DropdownItem> dropdownItems =
-                          DropdownItem.fromJsonToList(
-                              data.docs.map((doc) => doc.data()).toList());
+                      DropdownItem.fromJsonToList(
+                          data.docs.map((doc) => doc.data()).toList());
                       if (context.mounted) {
                         print(listService);
                         final res = await showFMBS(
                             height: DeviceUtils.size.height * 600 / 896,
                             context: context,
-                            builder: (context) => BTSService(
+                            builder: (context) =>
+                                BTSService(
                                   data: dropdownItems,
                                   selectedService: listService,
                                 ),
@@ -201,7 +221,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             estimatedFee += item.price!;
                           }
                           serviceTEC.text =
-                              services == '' ? serviceTEC.text : services;
+                          services == '' ? serviceTEC.text : services;
                         }
                         setState(() {});
                         print(services);
@@ -214,84 +234,101 @@ class _BookingScreenState extends State<BookingScreen> {
                   ),
                 if (listService != null)
                   Text(
-                      '${S.of(context).booking_ChiPhi}: ${NumberFormat.decimalPattern().format(estimatedFee)} VND',
+                      '${S
+                          .of(context)
+                          .booking_ChiPhi}: ${NumberFormat.decimalPattern()
+                          .format(estimatedFee)} VND',
                       style:
-                          FTypoSkin.title4.copyWith(color: FColorSkin.title)),
+                      FTypoSkin.title4.copyWith(color: FColorSkin.title)),
                 const SizedBox(
                   height: 16,
                 ),
                 Text(
-                  S.of(context).booking_ChonBarber,
+                  S
+                      .of(context)
+                      .booking_ChonBarber,
                   style: FTypoSkin.title4.copyWith(color: FColorSkin.title),
                 ),
                 listBarber!.isEmpty
-                    ? BuildEmptyData(title: S.of(context).booking_KhongCoBarber)
+                    ? BuildEmptyData(title: S
+                    .of(context)
+                    .booking_KhongCoBarber)
                     : SizedBox(
-                        height: 150,
-                        child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: listBarber?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            final barberData = listBarber?[index].data()
-                                as Map<String, dynamic>?;
-                            return Container(
-                              width: 150,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: pickedBarberId == barberData?['uid']
-                                      ? FColorSkin.primary
-                                      : FColorSkin.white,
-                                  border: Border.all(
-                                      color: FColorSkin.primary, width: 1)),
-                              child: CupertinoButton(
-                                  onPressed: () {
-                                    pickedBarberId = barberData?['uid'];
-                                    pickedBarber = barberData?['name'];
-                                    timePicked = null;
-                                    setState(() {});
-                                  },
-                                  child: Column(
-                                    children: [
-                                      BuildAvatarWithUrl(barberData?['profilePic'],size: 60),
-                                      Text(
-                                        barberData?['name'] ?? '',
-                                        style: FTypoSkin.subtitle1.copyWith(
-                                            color:
-                                                pickedBarberId == barberData?['uid']
-                                                    ? FColorSkin.white
-                                                    : FColorSkin.primary),
-                                      ),
-                                    ],
-                                  )),
-                            );
-                          },
-                          separatorBuilder: (context, index) => const SizedBox(
-                            width: 8,
-                          ),
-                        ),
-                      ),
+                  height: 150,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: listBarber?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final barberData = listBarber?[index].data()
+                      as Map<String, dynamic>?;
+                      return Container(
+                        width: 150,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: pickedBarberId == barberData?['uid']
+                                ? FColorSkin.primary
+                                : FColorSkin.white,
+                            border: Border.all(
+                                color: FColorSkin.primary, width: 1)),
+                        child: CupertinoButton(
+                            onPressed: () {
+                              pickedBarberId = barberData?['uid'];
+                              pickedBarber = barberData?['name'];
+                              timePicked = null;
+                              setState(() {});
+                            },
+                            child: Column(
+                              children: [
+                                BuildAvatarWithUrl(
+                                    barberData?['profilePic'], size: 60),
+                                Text(
+                                  barberData?['name'] ?? '',
+                                  style: FTypoSkin.subtitle1.copyWith(
+                                      color:
+                                      pickedBarberId == barberData?['uid']
+                                          ? FColorSkin.white
+                                          : FColorSkin.primary),
+                                ),
+                              ],
+                            )),
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                    const SizedBox(
+                      width: 8,
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 16,
                 ),
                 _dateField(
-                    title: S.of(context).booking_ChonNgay,
-                    hintText: S.of(context).booking_HintChonNgay,
+                    title: S
+                        .of(context)
+                        .booking_ChonNgay,
+                    hintText: S
+                        .of(context)
+                        .booking_HintChonNgay,
                     controller: dateTEC,
                     isRequire: false,
                     isEnable: true,
                     isSuffixIcon: true,
                     isDatePicker: true,
                     onTap: () {
-                      showFDatePicker(dateTEC, S.of(context).booking_ChonNgay);
+                      showFDatePicker(dateTEC, S
+                          .of(context)
+                          .booking_ChonNgay);
                     }),
                 const SizedBox(
                   height: 16,
                 ),
                 if (pickedBarberId != null && datePicked != null)
                   Text(
-                    S.of(context).booking_ChonTimeSlot,
+                    S
+                        .of(context)
+                        .booking_ChonTimeSlot,
                     style: FTypoSkin.title4.copyWith(color: FColorSkin.title),
                   ),
                 if (pickedBarberId != null && datePicked != null)
@@ -305,14 +342,17 @@ class _BookingScreenState extends State<BookingScreen> {
                     direction: Axis.horizontal,
                     children: timeSlot.map((slot) {
                       return FutureBuilder(
-                        future: isTimeSlotBooked(datePicked, slot, pickedBarberId),
+                        future: isTimeSlotBooked(
+                            datePicked, slot, pickedBarberId),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const SizedBox();
                           } else if (snapshot.hasError) {
                             // Show error message if an error occurs
-                            return Text(S.of(context).common_LoiXayRa);
+                            return Text(S
+                                .of(context)
+                                .common_LoiXayRa);
                           } else {
                             bool isBooked = snapshot.data == true;
                             return CupertinoButton(
@@ -320,9 +360,9 @@ class _BookingScreenState extends State<BookingScreen> {
                               onPressed: isBooked
                                   ? null
                                   : () {
-                                      timePicked = slot;
-                                      setState(() {});
-                                    },
+                                timePicked = slot;
+                                setState(() {});
+                              },
                               child: Container(
                                 alignment: Alignment.center,
                                 width: 60,
@@ -332,8 +372,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                   color: isBooked
                                       ? FColorSkin.grey2
                                       : timePicked == slot
-                                          ? FColorSkin.primary
-                                          : FColorSkin.white,
+                                      ? FColorSkin.primary
+                                      : FColorSkin.white,
                                   border: isBooked
                                       ? null
                                       : Border.all(color: FColorSkin.primary),
@@ -360,62 +400,92 @@ class _BookingScreenState extends State<BookingScreen> {
                 child: FFilledButton(
                   onPressed: () async {
                     if (services == '') {
-                      SnackBarCore.fail(title: S.of(context).booking_TBChonDichVu);
+                      SnackBarCore.fail(title: S
+                          .of(context)
+                          .booking_TBChonDichVu);
                     } else if (pickedBarberId == null) {
-                      SnackBarCore.fail(title: S.of(context).booking_TBChonBarber);
+                      SnackBarCore.fail(title: S
+                          .of(context)
+                          .booking_TBChonBarber);
                     } else if (datePicked == null) {
-                      SnackBarCore.fail(title: S.of(context).booking_TBChonNgay);
+                      SnackBarCore.fail(title: S
+                          .of(context)
+                          .booking_TBChonNgay);
                     } else if (timePicked == null) {
-                      SnackBarCore.fail(title: S.of(context).booking_TBChonTimeSlot);
+                      SnackBarCore.fail(title: S
+                          .of(context)
+                          .booking_TBChonTimeSlot);
                     } else {
                       await showDialog(
                         context: context,
-                        builder: (context) => CommonDialog(
-                          type: EnumTypeDialog.success,
-                          title: S.of(context).booking_XacNhan,
-                          cancelTitle: S.of(context).common_QuayLai,
-                          continueTitle: S.of(context).booking_DatLichBtn,
-                          service: services,
-                          barberName: pickedBarber,
-                          date: datePicked,
-                          timeSlot: timePicked,
-                          fee: estimatedFee,
-                          onContinue: () async{
-                            try {
-                              LoadingCore.loadingDialogIos(context);
-                              DataRepository dataRepository = DataRepository();
-                              await dataRepository.bookAppointment(
-                                  AppointmentItem(
-                                      userId: FirebaseAuth.instance.currentUser
-                                          ?.uid,
-                                      barberId: pickedBarberId,
-                                      bookedDate: datePicked,
-                                      bookedTime: timePicked,
-                                      appointmentId: '',
-                                      barberName: pickedBarber,
-                                      services: services,
-                                      estimatedFee: estimatedFee,
-                                      isCancelled: 0));
-                              await Future.delayed(const Duration(seconds: 0));
-                              if (context.mounted) {
-                                Navigator.of(context).pop();
-                              }
-                              await Future.delayed(const Duration(seconds: 0));
-                              if (context.mounted) {
-                                Navigator.of(context).pop();
-                                SnackBarCore.success(
-                                    title: S.of(context).common_ThanhCong);
-                                Navigator.of(context).pop();
-                              }
-                            }
-                            on FirebaseException catch (e){
-                              SnackBarCore.fail(title: e.code);
-                            }
-                            catch(e){
-                              SnackBarCore.fail(title: e.toString());
-                            }
-                          },
-                        ),
+                        builder: (context) =>
+                            CommonDialog(
+                              type: EnumTypeDialog.success,
+                              title: S
+                                  .of(context)
+                                  .booking_XacNhan,
+                              cancelTitle: S
+                                  .of(context)
+                                  .common_QuayLai,
+                              continueTitle: S
+                                  .of(context)
+                                  .booking_DatLichBtn,
+                              service: services,
+                              barberName: pickedBarber,
+                              date: datePicked,
+                              timeSlot: timePicked,
+                              fee: estimatedFee,
+                              onContinue: () async {
+                                try {
+                                  LoadingCore.loadingDialogIos(context);
+                                  DataRepository dataRepository = DataRepository();
+                                  await dataRepository.bookAppointment(
+                                      AppointmentItem(
+                                          userId: FirebaseAuth.instance
+                                              .currentUser
+                                              ?.uid,
+                                          barberId: pickedBarberId,
+                                          bookedDate: datePicked,
+                                          bookedTime: timePicked,
+                                          appointmentId: '',
+                                          barberName: pickedBarber,
+                                          services: services,
+                                          estimatedFee: estimatedFee,
+                                          isCancelled: 0));
+                                  if (context.mounted) {
+                                    Navigator.of(context).pop();
+                                  }
+                                  List<String> parts = timePicked!.split(':');
+                                  int slotHour = int.parse(parts[0]);
+                                  int slotMinute = int.parse(parts[1]);
+                                  alarmSettings = AlarmSettings(id: temp!.hashCode,
+                                    dateTime: temp!.copyWith(hour: slotHour,minute: slotMinute-10),
+                                    assetAudioPath: 'assets/audio/audio.mp3',
+                                    vibrate: true,
+                                    volume: 0.8,
+                                    fadeDuration: 3.0,
+                                    loopAudio: false,
+                                    notificationTitle: 'Ding dong',
+                                    notificationBody: 'Haircut at Sharp and Sheared',
+                                    enableNotificationOnKill: Platform.isIOS,);
+                                  if (context.mounted) {
+                                    Navigator.of(context).pop();
+                                    Alarm.set(alarmSettings: alarmSettings!);
+                                    SnackBarCore.success(
+                                        title: S
+                                            .of(context)
+                                            .common_ThanhCong);
+                                    Navigator.of(context).pop();
+                                  }
+                                }
+                                on FirebaseException catch (e) {
+                                  SnackBarCore.fail(title: e.code);
+                                }
+                                catch (e) {
+                                  SnackBarCore.fail(title: e.toString());
+                                }
+                              },
+                            ),
                       );
                     }
                   },
@@ -424,7 +494,9 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: Container(
                       alignment: Alignment.center,
                       child: Text(
-                        S.of(context).booking_DatLichBtn,
+                        S
+                            .of(context)
+                            .booking_DatLichBtn,
                         style: FTypoSkin.buttonText1
                             .copyWith(color: FColorSkin.white),
                       )),
@@ -474,22 +546,22 @@ class _BookingScreenState extends State<BookingScreen> {
           hintText: hintText,
           hintStyle: isBigTextArea == false
               ? FTypoSkin.bodyText2.copyWith(
-                  color: FColorSkin.title.withOpacity(0.4),
-                )
+            color: FColorSkin.title.withOpacity(0.4),
+          )
               : FTypoSkin.label2.copyWith(
-                  color: FColorSkin.title.withOpacity(0.4),
-                ),
+            color: FColorSkin.title.withOpacity(0.4),
+          ),
           suffixIcon: isSuffixIcon
               ? isDatePicker
-                  ? FIcon(
-                      icon: FFilled.calendar_date,
-                      size: 16,
-                      color: FColorSkin.subtitle)
-                  : FIcon(
-                      icon: FOutlined.down_arrow,
-                      size: 16,
-                      color: FColorSkin.subtitle,
-                    )
+              ? FIcon(
+              icon: FFilled.calendar_date,
+              size: 16,
+              color: FColorSkin.subtitle)
+              : FIcon(
+            icon: FOutlined.down_arrow,
+            size: 16,
+            color: FColorSkin.subtitle,
+          )
               : null,
           readOnly: onTap != null ? true : false,
           onTap: onTap,
