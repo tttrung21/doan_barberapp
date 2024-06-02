@@ -112,7 +112,7 @@ class _ImageGalleryState extends State<ImageGallery> {
           } else if (!snapshot.hasData ||
               snapshot.data == null ||
               snapshot.data!.docs.isEmpty) {
-            return BuildEmptyData(title: S.of(context).history_LichSuTrong);
+            return BuildEmptyData(title: S.of(context).gallery_KhongCoAnhTrongThuVien);
           }
           final data = snapshot.data?.docs;
 

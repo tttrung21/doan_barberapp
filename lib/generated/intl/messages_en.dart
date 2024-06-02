@@ -137,6 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I understand"),
         "common_XacNhan": MessageLookupByLibrary.simpleMessage("Confirm"),
         "common_quy": MessageLookupByLibrary.simpleMessage("Quarter"),
+        "gallery_KhongCoAnhTrongThuVien":
+            MessageLookupByLibrary.simpleMessage("No photos in the gallery"),
         "gallery_ThuVienAnh":
             MessageLookupByLibrary.simpleMessage("Image Gallery"),
         "history_ChonBarber":

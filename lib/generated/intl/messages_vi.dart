@@ -135,6 +135,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "common_ToiDaHieu": MessageLookupByLibrary.simpleMessage("Tôi đã hiểu"),
         "common_XacNhan": MessageLookupByLibrary.simpleMessage("Xác nhận"),
         "common_quy": MessageLookupByLibrary.simpleMessage("Quý"),
+        "gallery_KhongCoAnhTrongThuVien":
+            MessageLookupByLibrary.simpleMessage("Không có ảnh trong thư viện"),
         "gallery_ThuVienAnh":
             MessageLookupByLibrary.simpleMessage("Thư viện ảnh"),
         "history_ChonBarber":

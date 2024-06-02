@@ -730,6 +730,16 @@ class S {
     );
   }
 
+  /// `No photos in the gallery`
+  String get gallery_KhongCoAnhTrongThuVien {
+    return Intl.message(
+      'No photos in the gallery',
+      name: 'gallery_KhongCoAnhTrongThuVien',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Book now`
   String get booking_DatNgay {
     return Intl.message(
