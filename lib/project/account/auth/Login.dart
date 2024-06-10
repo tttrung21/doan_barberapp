@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:doan_barberapp/Utils/Loading.dart';
 import 'package:doan_barberapp/components/skin/color_skin.dart';
 import 'package:doan_barberapp/components/skin/typo_skin.dart';
 import 'package:doan_barberapp/components/widget/SnackBar.dart';
@@ -153,12 +154,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                                 else
                                                   CupertinoButton(
                                                     onPressed: () {
-                                                      FocusManager
-                                                          .instance.primaryFocus
-                                                          ?.unfocus();
-                                                      final validate =
-                                                          Form.of(context)
-                                                              .validate();
+                                                      FocusManager.instance.primaryFocus?.unfocus();
+                                                      final validate = Form.of(context).validate();
                                                       if (!validate) {
                                                         return;
                                                       }

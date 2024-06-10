@@ -66,7 +66,7 @@ class Validate {
       }
       return FTextFieldStatus(
         status: TFStatus.error,
-        message: S.of(context).common_ThongTinKhongHopLe,
+        message: S.of(context).common_LoiMK8KyTu,
       );
     } else {
       return FTextFieldStatus(

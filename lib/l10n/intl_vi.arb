@@ -69,8 +69,12 @@
   "home_NhuomToc" : "Nhuộm tóc",
   "home_TaoKieu" : "Tạo kiểu",
 
-  "gallery_ThuVienAnh": "Thư viện ảnh",
+  "gallery_ThuVienAnh" : "Thư viện ảnh",
   "gallery_KhongCoAnhTrongThuVien" : "Không có ảnh trong thư viện",
+  "gallery_XoaAnh" : "Xóa ảnh",
+  "gallery_BanCoChacXoaAnhNay" : "Bạn có chắc xóa ảnh này?",
+  "gallery_XoaThanhCong" : "Xóa thành công",
+  "gallery_XoaThatBai" : "Xóa thất bại",
 
   "booking_DatNgay" : "Đặt ngay",
   "booking_DatLichHen" : "Đặt lịch hẹn",

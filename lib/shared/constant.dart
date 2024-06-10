@@ -2,7 +2,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../components/skin/color_skin.dart';
@@ -33,7 +32,7 @@ const List<String> timeSlot = [
   '15:00',
   '15:30',
   '16:00',
-  '16:30',
+  '16:30'
 ];
 
 enum EnumGender { male, female }

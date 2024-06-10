@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:doan_barberapp/Utils/Loading.dart';
 import 'package:doan_barberapp/components/skin/color_skin.dart';
 import 'package:doan_barberapp/components/skin/typo_skin.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> FocusManager.instance.primaryFocus?.unfocus(),
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
           backgroundColor: FColorSkin.white,
           body: BlocConsumer<AuthBloc, AuthState>(
@@ -48,16 +49,13 @@ class _RegisterState extends State<Register> {
                     MaterialPageRoute(builder: (context) => SignInScreen()));
               }
               if (state is AuthError) {
-                SnackBarCore.fail(title: state.message ?? S.of(context).common_LoiXayRa);
+                SnackBarCore.fail(
+                    title: state.message ?? S.of(context).common_LoiXayRa);
               }
             },
-            listenWhen: (previous, current) => current is AuthSuccess || current is AuthError,
+            listenWhen: (previous, current) =>
+                current is AuthSuccess || current is AuthError,
             builder: (context, state) {
-              if (state is AuthLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
               return SingleChildScrollView(
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
@@ -68,7 +66,7 @@ class _RegisterState extends State<Register> {
                     children: <Widget>[
                       Flexible(
                         child: Container(
-                          margin: const EdgeInsets.only(bottom: 20.0,left: 16),
+                          margin: const EdgeInsets.only(bottom: 20.0, left: 16),
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 94.0),
                           transform: Matrix4.rotationZ(-8 * pi / 180)
@@ -84,10 +82,10 @@ class _RegisterState extends State<Register> {
                               )
                             ],
                           ),
-                          child:  Text(
+                          child: Text(
                             shopName,
-                            style: FTypoSkin.title1.copyWith(color: FColorSkin.white),
-
+                            style: FTypoSkin.title1
+                                .copyWith(color: FColorSkin.white),
                           ),
                         ),
                       ),
@@ -108,34 +106,25 @@ class _RegisterState extends State<Register> {
                                           builder: (context) => Column(
                                                 children: [
                                                   TextFormField(
-                                                    style: const TextStyle(color: Colors.black),
-                                                    decoration: const InputDecoration(labelText: 'Email'),
-                                                    textInputAction: TextInputAction.next,
+                                                    style: const TextStyle(
+                                                        color: Colors.black),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            labelText: 'Email'),
+                                                    textInputAction:
+                                                        TextInputAction.next,
                                                     controller: nameTEC,
                                                     validator: (value) {
                                                       if (value!.isEmpty) {
-                                                        return S.of(context).common_LoiThongTinTrong;
+                                                        return S
+                                                            .of(context)
+                                                            .common_LoiThongTinTrong;
                                                       }
                                                       if (!EmailValidator
                                                           .validate(value)) {
-                                                        return S.of(context).common_LoiEmailKhongHopLe;
-                                                      }
-                                                      return null;
-                                                    },
-                                                  ),
-                                                  TextFormField(
-                                                    style: const TextStyle(color: Colors.black),
-                                                    obscureText: true,
-                                                    decoration:
-                                                    InputDecoration(labelText: S.of(context).auth_MatKhau),
-                                                    textInputAction:
-                                                        TextInputAction.next,
-                                                    controller: passwordTEC,
-                                                    validator: (value) {
-                                                      if (value!.isEmpty) {
-                                                        return S.of(context).common_LoiThongTinTrong;
-                                                      } else if (value.length < 8) {
-                                                        return S.of(context).common_LoiMK8KyTu;
+                                                        return S
+                                                            .of(context)
+                                                            .common_LoiEmailKhongHopLe;
                                                       }
                                                       return null;
                                                     },
@@ -144,40 +133,79 @@ class _RegisterState extends State<Register> {
                                                     style: const TextStyle(
                                                         color: Colors.black),
                                                     obscureText: true,
-                                                    decoration:
-                                                         InputDecoration(
-                                                            labelText: S.of(context).auth_NhapLaiMatKhau),
+                                                    decoration: InputDecoration(
+                                                        labelText: S
+                                                            .of(context)
+                                                            .auth_MatKhau),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    controller: passwordTEC,
                                                     validator: (value) {
                                                       if (value!.isEmpty) {
-                                                        return S.of(context).common_LoiThongTinTrong;
-                                                      } else if (value !=
-                                                          passwordTEC.text) {
-                                                        return S.of(context).common_LoiMKKhac;
+                                                        return S
+                                                            .of(context)
+                                                            .common_LoiThongTinTrong;
+                                                      } else if (value.length <
+                                                          8) {
+                                                        return S
+                                                            .of(context)
+                                                            .common_LoiMK8KyTu;
                                                       }
                                                       return null;
                                                     },
                                                   ),
-                                                  SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
-                                                  CupertinoButton(
-                                                    onPressed: () {
-                                                      final validate = Form.of(context).validate();
-                                                      if (!validate) {
-                                                        return;
+                                                  TextFormField(
+                                                    style: const TextStyle(
+                                                        color: Colors.black),
+                                                    obscureText: true,
+                                                    decoration: InputDecoration(
+                                                        labelText: S
+                                                            .of(context)
+                                                            .auth_NhapLaiMatKhau),
+                                                    validator: (value) {
+                                                      if (value!.isEmpty) {
+                                                        return S
+                                                            .of(context)
+                                                            .common_LoiThongTinTrong;
+                                                      } else if (value !=
+                                                          passwordTEC.text) {
+                                                        return S
+                                                            .of(context)
+                                                            .common_LoiMKKhac;
                                                       }
-                                                      Form.of(context).save();
-                                                      context.read<AuthBloc>().add(
-                                                          SignUpRequestedEvent(
-                                                              email: nameTEC.text,
-                                                              password: passwordTEC.text));
+                                                      return null;
                                                     },
-                                                    borderRadius: BorderRadius.circular(100),
-                                                    color: FColorSkin.primary,
-                                                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                                                    child: Text(
-                                                      S.of(context).auth_DangKy,
-                                                      style: TextStyle(color: FColorSkin.white),
-                                                    ),
-                                                  )
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.02,
+                                                  ),
+                                                  if (state is AuthLoadingState)
+                                                    const Center(child: CircularProgressIndicator(),)
+                                                  else
+                                                    CupertinoButton(
+                                                      onPressed: () {
+                                                        final validate = Form.of(context).validate();
+                                                        if (!validate) {
+                                                          return;
+                                                        }
+                                                        Form.of(context).save();
+                                                        context.read<AuthBloc>().add(
+                                                            SignUpRequestedEvent(
+                                                                email: nameTEC.text,
+                                                                password: passwordTEC.text));
+                                                      },
+                                                      borderRadius: BorderRadius.circular(100),
+                                                      color: FColorSkin.primary,
+                                                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                                      child: Text(
+                                                        S.of(context).auth_DangKy,
+                                                        style: TextStyle(color: FColorSkin.white),
+                                                      ),
+                                                    )
                                                 ],
                                               ))),
                                 ),
@@ -191,12 +219,16 @@ class _RegisterState extends State<Register> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => SignInScreen()));
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    SignInScreen()));
                                       },
                                       child: Text(
                                         S.of(context).auth_nDangNhap,
-                                        style: FTypoSkin.title4.copyWith(
-                                            color: FColorSkin.error),
+                                        style: FTypoSkin.title4
+                                            .copyWith(color: FColorSkin.error),
                                       ),
                                     )
                                   ],

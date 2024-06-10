@@ -98,7 +98,7 @@ class CommonDialog extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 8),
                     child: Text(
-                      '${S.of(context).booking_ChiPhi}: $fee' ?? '',
+                      '${S.of(context).booking_ChiPhi}(VND): $fee' ?? '',
                       style: FTypoSkin.bodyText2.copyWith(
                         color: FColorSkin.title.withOpacity(0.8),
                       ),

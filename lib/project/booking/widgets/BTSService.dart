@@ -90,7 +90,7 @@ class _BTSSystemSPState extends State<BTSService> {
               ),
               FAppBar(
                 title: Text(
-                  S.of(context).booking_DichVu,
+                  S.of(context).booking_HintDichVu,
                   style: FTypoSkin.title3
                       .copyWith(color: FColorSkin.title, height: 0),
                 ),
@@ -119,7 +119,7 @@ class _BTSSystemSPState extends State<BTSService> {
                           controller: _searchController,
                           borderColor: FColorSkin.transparent,
                           focusColor: FColorSkin.transparent,
-                          backgroundColor: FColorSkin.grey3,
+                          backgroundColor: FColorSkin.grey2,
                           size: FInputSize.size40,
                           prefixIcon: FIcon(
                             icon: FOutlined.search,

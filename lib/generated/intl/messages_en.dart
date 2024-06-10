@@ -137,10 +137,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("I understand"),
         "common_XacNhan": MessageLookupByLibrary.simpleMessage("Confirm"),
         "common_quy": MessageLookupByLibrary.simpleMessage("Quarter"),
+        "gallery_BanCoChacXoaAnhNay": MessageLookupByLibrary.simpleMessage(
+            "Are you sure to delete this image?"),
         "gallery_KhongCoAnhTrongThuVien":
             MessageLookupByLibrary.simpleMessage("No photos in the gallery"),
         "gallery_ThuVienAnh":
             MessageLookupByLibrary.simpleMessage("Image Gallery"),
+        "gallery_XoaAnh": MessageLookupByLibrary.simpleMessage("Delete Image"),
+        "gallery_XoaThanhCong":
+            MessageLookupByLibrary.simpleMessage("Successfully delete image"),
+        "gallery_XoaThatBai":
+            MessageLookupByLibrary.simpleMessage("Error delete image"),
         "history_ChonBarber":
             MessageLookupByLibrary.simpleMessage("Choose Barber"),
         "history_DaDat": MessageLookupByLibrary.simpleMessage("Booked"),

@@ -135,10 +135,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "common_ToiDaHieu": MessageLookupByLibrary.simpleMessage("Tôi đã hiểu"),
         "common_XacNhan": MessageLookupByLibrary.simpleMessage("Xác nhận"),
         "common_quy": MessageLookupByLibrary.simpleMessage("Quý"),
+        "gallery_BanCoChacXoaAnhNay":
+            MessageLookupByLibrary.simpleMessage("Bạn có chắc xóa ảnh này?"),
         "gallery_KhongCoAnhTrongThuVien":
             MessageLookupByLibrary.simpleMessage("Không có ảnh trong thư viện"),
         "gallery_ThuVienAnh":
             MessageLookupByLibrary.simpleMessage("Thư viện ảnh"),
+        "gallery_XoaAnh": MessageLookupByLibrary.simpleMessage("Xóa ảnh"),
+        "gallery_XoaThanhCong":
+            MessageLookupByLibrary.simpleMessage("Xóa thành công"),
+        "gallery_XoaThatBai":
+            MessageLookupByLibrary.simpleMessage("Xóa thất bại"),
         "history_ChonBarber":
             MessageLookupByLibrary.simpleMessage("Chọn barber"),
         "history_DaDat": MessageLookupByLibrary.simpleMessage("Đã đặt"),

@@ -71,6 +71,10 @@
 
   "gallery_ThuVienAnh": "Image Gallery",
   "gallery_KhongCoAnhTrongThuVien" : "No photos in the gallery",
+  "gallery_XoaAnh" : "Delete Image",
+  "gallery_BanCoChacXoaAnhNay" : "Are you sure to delete this image?",
+  "gallery_XoaThanhCong" : "Successfully delete image",
+  "gallery_XoaThatBai" : "Error delete image",
 
   "booking_DatNgay": "Book now",
   "booking_DatLichHen": "Schedule appointment",

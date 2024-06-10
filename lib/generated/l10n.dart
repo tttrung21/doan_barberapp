@@ -740,6 +740,46 @@ class S {
     );
   }
 
+  /// `Delete Image`
+  String get gallery_XoaAnh {
+    return Intl.message(
+      'Delete Image',
+      name: 'gallery_XoaAnh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure to delete this image?`
+  String get gallery_BanCoChacXoaAnhNay {
+    return Intl.message(
+      'Are you sure to delete this image?',
+      name: 'gallery_BanCoChacXoaAnhNay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully delete image`
+  String get gallery_XoaThanhCong {
+    return Intl.message(
+      'Successfully delete image',
+      name: 'gallery_XoaThanhCong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error delete image`
+  String get gallery_XoaThatBai {
+    return Intl.message(
+      'Error delete image',
+      name: 'gallery_XoaThatBai',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Book now`
   String get booking_DatNgay {
     return Intl.message(

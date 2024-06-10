@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doan_barberapp/Utils/Loading.dart';
+import 'package:doan_barberapp/project/booking/widgets/CommonDialog.dart';
 import 'package:doan_barberapp/shared/models/UserModel.dart';
 import 'package:doan_barberapp/shared/repository/DataRepository.dart';
+import 'package:doan_barberapp/utils/ViewFile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -32,14 +34,15 @@ class _ImageGalleryState extends State<ImageGallery> {
   Future<File?> pickImage() async {
     File? image;
     try {
-      final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
       if (pickedImage != null) {
         image = File(pickedImage.path);
-        if(mounted){
+        if (mounted) {
           LoadingCore.loadingDialogIos(context);
         }
         await DataRepository().saveImage(file: image);
-        if(mounted) {
+        if (mounted) {
           Navigator.of(context).pop();
         }
       }
@@ -51,7 +54,6 @@ class _ImageGalleryState extends State<ImageGallery> {
 
   void selectImage() async {
     img = await pickImage();
-    setState(() {});
   }
 
   @override
@@ -100,8 +102,7 @@ class _ImageGalleryState extends State<ImageGallery> {
       ),
       backgroundColor: FColorSkin.white,
       body: StreamBuilder(
-        stream:
-            FirebaseFirestore.instance.collection('gallery').snapshots(),
+        stream: FirebaseFirestore.instance.collection('gallery').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return buildLoading();
@@ -112,22 +113,63 @@ class _ImageGalleryState extends State<ImageGallery> {
           } else if (!snapshot.hasData ||
               snapshot.data == null ||
               snapshot.data!.docs.isEmpty) {
-            return BuildEmptyData(title: S.of(context).gallery_KhongCoAnhTrongThuVien);
+            return BuildEmptyData(
+                title: S.of(context).gallery_KhongCoAnhTrongThuVien);
           }
           final data = snapshot.data?.docs;
-
-          return ListView.separated(
+          return GridView.builder(
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            shrinkWrap: true,
             itemCount: data?.length ?? 0,
             itemBuilder: (context, index) {
               final img = data?[index].data()['image'];
-              return BuildImage(ratio: 1, url: img ?? '');
+              print(data?[index].id);
+              return GestureDetector(
+                  onLongPress: widget.user?.role == 'barber'
+                      ? () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => CommonDialog(
+                                type: EnumTypeDialog.error,
+                                title: S.of(context).gallery_XoaAnh,
+                                subtitle:
+                                    S.of(context).gallery_BanCoChacXoaAnhNay,
+                                cancelTitle: S.of(context).common_QuayLai,
+                                continueTitle: S.of(context).common_XacNhan,
+                                onContinue: () async {
+                                  LoadingCore.loadingDialogIos(context);
+                                  try {
+                                    await FirebaseFirestore.instance
+                                        .collection('gallery')
+                                        .doc(data?[index].id)
+                                        .delete();
+                                    if (context.mounted) {
+                                      SnackBarCore.success(
+                                          title: S
+                                              .of(context)
+                                              .gallery_XoaThanhCong);
+                                    }
+                                  } on FirebaseException catch (e) {
+                                    if (context.mounted) {
+                                      SnackBarCore.fail(
+                                          title: e.message ??
+                                              S.of(context).gallery_XoaThatBai);
+                                    }
+                                  } catch (e) {
+                                    rethrow;
+                                  }
+                                  if (context.mounted) {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                  }
+                                }),
+                          );
+                        }
+                      : null,
+                  child: BuildImage(ratio: 1, url: img ?? ''));
             },
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 16,
-            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, mainAxisSpacing: 12, crossAxisSpacing: 12),
           );
         },
       ),

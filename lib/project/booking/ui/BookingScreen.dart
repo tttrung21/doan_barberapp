@@ -50,7 +50,6 @@ class _BookingScreenState extends State<BookingScreen> {
   String services = '';
   List<DropdownItem>? listService;
   bool isFirstService = true;
-  AlarmSettings? alarmSettings;
 
   List<QueryDocumentSnapshot>? listBarber;
   DateTime now = DateTime.now(); // tg hien tai
@@ -132,7 +131,20 @@ class _BookingScreenState extends State<BookingScreen> {
       return false; // Return false in case of error
     }
   }
-
+  Future<void> setAlarm(int slotHour,int slotMinute)async{
+    final alarmSettings = AlarmSettings(
+      id: temp!.millisecondsSinceEpoch % 1000,
+      dateTime: temp!.copyWith(hour: slotHour,minute: slotMinute-20,second: 0,millisecond: 0),
+      assetAudioPath: 'assets/audio/audio.mp3',
+      vibrate: true,
+      volume: 0.8,
+      fadeDuration: 3.0,
+      loopAudio: true,
+      notificationTitle: 'Ding dong',
+      notificationBody: 'Haircut at Sharp and Sheared',
+      enableNotificationOnKill: Platform.isIOS,);
+    await Alarm.set(alarmSettings: alarmSettings);
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -380,7 +392,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                 ),
                                 child: Text(slot,
                                     style: FTypoSkin.subtitle3
-                                        .copyWith(color: FColorSkin.subtitle)),
+                                        .copyWith(color:FColorSkin.subtitle )),
                               ),
                             );
                           }
@@ -458,25 +470,15 @@ class _BookingScreenState extends State<BookingScreen> {
                                   List<String> parts = timePicked!.split(':');
                                   int slotHour = int.parse(parts[0]);
                                   int slotMinute = int.parse(parts[1]);
-                                  alarmSettings = AlarmSettings(id: temp!.hashCode,
-                                    dateTime: temp!.copyWith(hour: slotHour,minute: slotMinute-10),
-                                    assetAudioPath: 'assets/audio/audio.mp3',
-                                    vibrate: true,
-                                    volume: 0.8,
-                                    fadeDuration: 3.0,
-                                    loopAudio: false,
-                                    notificationTitle: 'Ding dong',
-                                    notificationBody: 'Haircut at Sharp and Sheared',
-                                    enableNotificationOnKill: Platform.isIOS,);
                                   if (context.mounted) {
                                     Navigator.of(context).pop();
-                                    Alarm.set(alarmSettings: alarmSettings!);
                                     SnackBarCore.success(
                                         title: S
                                             .of(context)
                                             .common_ThanhCong);
                                     Navigator.of(context).pop();
                                   }
+                                  await setAlarm(slotHour,slotMinute);
                                 }
                                 on FirebaseException catch (e) {
                                   SnackBarCore.fail(title: e.code);
