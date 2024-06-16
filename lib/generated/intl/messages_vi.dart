@@ -44,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "auth_QuenMK": MessageLookupByLibrary.simpleMessage("Quên mật khẩu"),
         "auth_nDangKy": MessageLookupByLibrary.simpleMessage("đăng ký"),
         "auth_nDangNhap": MessageLookupByLibrary.simpleMessage("đăng nhập"),
+        "booking_CapNhat":
+            MessageLookupByLibrary.simpleMessage("Cập nhật lịch hẹn"),
         "booking_ChiPhi": MessageLookupByLibrary.simpleMessage("Chi phí"),
         "booking_ChonBarber":
             MessageLookupByLibrary.simpleMessage("Chọn barber"),
@@ -79,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bạn chưa chọn khung giờ!"),
         "booking_XacNhan":
             MessageLookupByLibrary.simpleMessage("Xác nhận đặt hẹn"),
+        "booking_XacNhanCapNhat":
+            MessageLookupByLibrary.simpleMessage("Xác nhận cập nhật lịch hẹn"),
         "common_ApDung": MessageLookupByLibrary.simpleMessage("Áp dụng"),
         "common_BoLoc": MessageLookupByLibrary.simpleMessage("Bộ lọc"),
         "common_Chon": MessageLookupByLibrary.simpleMessage("Chọn"),
@@ -146,6 +150,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Xóa thành công"),
         "gallery_XoaThatBai":
             MessageLookupByLibrary.simpleMessage("Xóa thất bại"),
+        "history_ChinhSua":
+            MessageLookupByLibrary.simpleMessage("Chỉnh sửa hẹn"),
         "history_ChonBarber":
             MessageLookupByLibrary.simpleMessage("Chọn barber"),
         "history_DaDat": MessageLookupByLibrary.simpleMessage("Đã đặt"),

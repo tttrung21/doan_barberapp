@@ -104,7 +104,7 @@ Material BuildErrorImage(
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
-                  'Loi tai anh',
+                  S.of(context).common_LoiXayRa,
                   style: FTypoSkin.bodyText2.copyWith(color: FColorSkin.body),
                   textAlign: TextAlign.center,
                 ),

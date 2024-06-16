@@ -32,9 +32,11 @@ import '../../../generated/l10n.dart';
 import '../../../utils/ConvertUtils.dart';
 
 class BookingScreen extends StatefulWidget {
-  BookingScreen({super.key, this.listBarber});
+  BookingScreen({super.key, this.listBarber, this.isEdit, this.appointmentItem});
 
   final List<QueryDocumentSnapshot>? listBarber;
+  final bool? isEdit;
+  final AppointmentItem? appointmentItem;
 
   @override
   State<BookingScreen> createState() => _BookingScreenState();
@@ -47,7 +49,12 @@ class _BookingScreenState extends State<BookingScreen> {
   String? pickedBarber;
   String? timePicked;
   int estimatedFee = 0;
+  //service
   String services = '';
+  String servicesId = '';
+  String servicesCode = '';
+  String servicesPrice = '';
+
   List<DropdownItem>? listService;
   bool isFirstService = true;
 
@@ -133,8 +140,8 @@ class _BookingScreenState extends State<BookingScreen> {
   }
   Future<void> setAlarm(int slotHour,int slotMinute)async{
     final alarmSettings = AlarmSettings(
-      id: temp!.millisecondsSinceEpoch % 1000,
-      dateTime: temp!.copyWith(hour: slotHour,minute: slotMinute-20,second: 0,millisecond: 0),
+      id: temp!.copyWith(hour: slotHour,minute: slotMinute).millisecondsSinceEpoch~/1000 ,
+      dateTime: temp!.copyWith(hour: slotHour,minute: slotMinute-10,second: 0,millisecond: 0),
       assetAudioPath: 'assets/audio/audio.mp3',
       vibrate: true,
       volume: 0.8,
@@ -150,6 +157,32 @@ class _BookingScreenState extends State<BookingScreen> {
     // TODO: implement initState
     super.initState();
     listBarber = widget.listBarber ?? [];
+    if((widget.isEdit != null) && (widget.isEdit == true)){
+      List<String> listCode = widget.appointmentItem!.servicesCode!.split(', ');
+      List<String> listIdString = widget.appointmentItem!.servicesId!.split(', ');
+      List<int> listId =[];
+      for(var item in listIdString){
+        listId.add(int.parse(item));
+      }
+      List<String> listPriceString = widget.appointmentItem!.servicesPrice!.split(', ');
+      List<int> listPrice =[];
+      for(var item in listPriceString){
+        listPrice.add(int.parse(item));
+      }
+      List<String> listName = widget.appointmentItem!.services!.split(', ');
+      listService = [];
+      for(int i = 0; i < listName.length ; i++){
+        listService?.add(DropdownItem(code: listCode[i],id: listId[i],name: listName[i],price: listPrice[i]));
+      }
+      serviceTEC.text = services = widget.appointmentItem?.services ?? '';
+      estimatedFee = widget.appointmentItem?.estimatedFee ?? 0;
+      // datePicked = dateTEC.text = widget.appointmentItem?.bookedDate ?? '';
+      servicesId = widget.appointmentItem?.servicesId ?? '';
+      servicesCode = widget.appointmentItem?.servicesCode ??'';
+      servicesPrice = widget.appointmentItem?.servicesPrice ??'';
+      pickedBarber = widget.appointmentItem?.barberName;
+      pickedBarberId = widget.appointmentItem?.barberId;
+    }
   }
 
   @override
@@ -169,7 +202,7 @@ class _BookingScreenState extends State<BookingScreen> {
           backgroundColor: FColorSkin.primary,
           titleSpacing: 0,
           title: Text(
-            S
+            widget.isEdit ?? false ? S.of(context).history_ChinhSua : S
                 .of(context)
                 .booking_DatLichHen,
             style:
@@ -220,15 +253,22 @@ class _BookingScreenState extends State<BookingScreen> {
                         if (res != null) {
                           listService = res;
                           services = '';
+                          servicesId = '';
                           serviceTEC.text = '';
                           estimatedFee = 0;
                           isFirstService = true;
                           for (DropdownItem item in listService!) {
                             if (isFirstService) {
                               services = item.name!;
+                              servicesId = item.id.toString();
+                              servicesCode = item.code.toString();
+                              servicesPrice = item.price.toString();
                               isFirstService = false;
                             } else {
                               services += ', ${item.name!}';
+                              servicesId += ', ${item.id!}';
+                              servicesCode += ', ${item.code!}';
+                              servicesPrice += ', ${item.price!}';
                             }
                             estimatedFee += item.price!;
                           }
@@ -236,8 +276,6 @@ class _BookingScreenState extends State<BookingScreen> {
                           services == '' ? serviceTEC.text : services;
                         }
                         setState(() {});
-                        print(services);
-                        print(serviceTEC.text);
                       }
                     }),
                 if (listService != null)
@@ -433,13 +471,13 @@ class _BookingScreenState extends State<BookingScreen> {
                         builder: (context) =>
                             CommonDialog(
                               type: EnumTypeDialog.success,
-                              title: S
+                              title: widget.isEdit ?? false ? S.of(context).booking_XacNhanCapNhat : S
                                   .of(context)
                                   .booking_XacNhan,
                               cancelTitle: S
                                   .of(context)
                                   .common_QuayLai,
-                              continueTitle: S
+                              continueTitle: widget.isEdit ?? false ? S.of(context).booking_CapNhat : S
                                   .of(context)
                                   .booking_DatLichBtn,
                               service: services,
@@ -450,8 +488,34 @@ class _BookingScreenState extends State<BookingScreen> {
                               onContinue: () async {
                                 try {
                                   LoadingCore.loadingDialogIos(context);
+                                  List<String> parts = timePicked!.split(':');
+                                  int slotHour = int.parse(parts[0]);
+                                  int slotMinute = int.parse(parts[1]);
                                   DataRepository dataRepository = DataRepository();
-                                  await dataRepository.bookAppointment(
+                                  if(widget.isEdit ?? false){
+                                    print(temp);
+                                    await dataRepository.updateAppointment(AppointmentItem(
+                                      appointmentId: widget.appointmentItem?.appointmentId,
+                                      isCancelled: widget.appointmentItem?.isCancelled,
+                                      userId: widget.appointmentItem?.userId,
+                                      barberId: pickedBarberId,
+                                      bookedDate: datePicked,
+                                      bookedTime: timePicked,
+                                      servicesPrice: servicesPrice,
+                                      servicesId: servicesId,
+                                      servicesCode: servicesCode,
+                                      barberName: pickedBarber,
+                                      services: services,
+                                      estimatedFee: estimatedFee,
+                                      alarmId: temp!.copyWith(hour: slotHour,minute: slotMinute).millisecondsSinceEpoch~/1000,
+                                    ));
+                                    Alarm.stop(widget.appointmentItem!.alarmId!);
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  }
+                                  else {
+                                    await dataRepository.bookAppointment(
                                       AppointmentItem(
                                           userId: FirebaseAuth.instance
                                               .currentUser
@@ -460,16 +524,21 @@ class _BookingScreenState extends State<BookingScreen> {
                                           bookedDate: datePicked,
                                           bookedTime: timePicked,
                                           appointmentId: '',
+                                          servicesPrice: servicesPrice,
+                                          servicesId: servicesId,
+                                          servicesCode: servicesCode,
                                           barberName: pickedBarber,
                                           services: services,
                                           estimatedFee: estimatedFee,
-                                          isCancelled: 0));
-                                  if (context.mounted) {
-                                    Navigator.of(context).pop();
+                                          alarmId: temp!.copyWith(hour: slotHour,minute: slotMinute).millisecondsSinceEpoch~/1000,
+                                          isCancelled: 0
+                                      ));
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+                                    }
                                   }
-                                  List<String> parts = timePicked!.split(':');
-                                  int slotHour = int.parse(parts[0]);
-                                  int slotMinute = int.parse(parts[1]);
+
+
                                   if (context.mounted) {
                                     Navigator.of(context).pop();
                                     SnackBarCore.success(
@@ -496,7 +565,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   child: Container(
                       alignment: Alignment.center,
                       child: Text(
-                        S
+                        widget.isEdit ?? false ? S.of(context).booking_CapNhat :S
                             .of(context)
                             .booking_DatLichBtn,
                         style: FTypoSkin.buttonText1

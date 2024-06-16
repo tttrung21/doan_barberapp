@@ -96,6 +96,8 @@
   "booking_DialogBarber" : "Chosen barber",
   "booking_DialogThoiGian" : "Time chosen",
   "booking_DialogDichVu" : "Service chosen",
+  "booking_CapNhat" : "Update Appointment",
+  "booking_XacNhanCapNhat" : "Confirm update",
 
   "history_LichSuCat" : "Booking History",
   "history_DangNhapTruoc" : "Log in first to see your history",
@@ -110,6 +112,7 @@
   "history_DaDat" : "Booked",
   "history_ChonBarber": "Choose Barber",
   "history_TrangThai" : "Status",
+  "history_ChinhSua" : "Edit Appointment",
 
   "profile_Khach" : "Guest",
   "profile_ThongTinTaiKhoan" : "Account information",

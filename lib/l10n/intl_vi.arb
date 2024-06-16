@@ -96,6 +96,9 @@
   "booking_DialogBarber" : "Barber đã chọn",
   "booking_DialogThoiGian" : "Thời gian đã chọn",
   "booking_DialogDichVu" : "Dịch vụ đã chọn",
+  "booking_CapNhat" : "Cập nhật lịch hẹn",
+  "booking_XacNhanCapNhat" : "Xác nhận cập nhật lịch hẹn",
+
 
 
   "history_LichSuCat" : "Lịch sử cắt",
@@ -111,6 +114,8 @@
   "history_DaDat" : "Đã đặt",
   "history_ChonBarber": "Chọn barber",
   "history_TrangThai" : "Trạng thái",
+  "history_ChinhSua" : "Chỉnh sửa hẹn",
+
 
   "profile_Khach" : "Khách",
   "profile_ThongTinTaiKhoan" : "Thông tin tài khoản",

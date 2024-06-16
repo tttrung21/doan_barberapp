@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class FTypoSkin {
   /// [Title Typography Mobile]
-  static const TextStyle largeTitle = TextStyle(fontSize: 38, height: 48 / 38, fontWeight: FontWeight.w600);
+  static const TextStyle largeTitle = TextStyle(fontSize: 34, height: 48 / 38, fontWeight: FontWeight.w600);
 
   static const TextStyle title1 = TextStyle(fontSize: 24, height: 32 / 24, fontWeight: FontWeight.w600);
 

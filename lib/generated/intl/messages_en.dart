@@ -45,6 +45,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "auth_QuenMK": MessageLookupByLibrary.simpleMessage("Forgot Password"),
         "auth_nDangKy": MessageLookupByLibrary.simpleMessage("signing up"),
         "auth_nDangNhap": MessageLookupByLibrary.simpleMessage("logging in"),
+        "booking_CapNhat":
+            MessageLookupByLibrary.simpleMessage("Update Appointment"),
         "booking_ChiPhi": MessageLookupByLibrary.simpleMessage("Fee"),
         "booking_ChonBarber":
             MessageLookupByLibrary.simpleMessage("Select barber"),
@@ -81,6 +83,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You haven\'t selected a time slot!"),
         "booking_XacNhan":
             MessageLookupByLibrary.simpleMessage("Confirm Booking"),
+        "booking_XacNhanCapNhat":
+            MessageLookupByLibrary.simpleMessage("Confirm update"),
         "common_ApDung": MessageLookupByLibrary.simpleMessage("Apply"),
         "common_BoLoc": MessageLookupByLibrary.simpleMessage("Filter"),
         "common_Chon": MessageLookupByLibrary.simpleMessage("Choose"),
@@ -148,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Successfully delete image"),
         "gallery_XoaThatBai":
             MessageLookupByLibrary.simpleMessage("Error delete image"),
+        "history_ChinhSua":
+            MessageLookupByLibrary.simpleMessage("Edit Appointment"),
         "history_ChonBarber":
             MessageLookupByLibrary.simpleMessage("Choose Barber"),
         "history_DaDat": MessageLookupByLibrary.simpleMessage("Booked"),

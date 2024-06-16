@@ -980,6 +980,26 @@ class S {
     );
   }
 
+  /// `Update Appointment`
+  String get booking_CapNhat {
+    return Intl.message(
+      'Update Appointment',
+      name: 'booking_CapNhat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm update`
+  String get booking_XacNhanCapNhat {
+    return Intl.message(
+      'Confirm update',
+      name: 'booking_XacNhanCapNhat',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Booking History`
   String get history_LichSuCat {
     return Intl.message(
@@ -1105,6 +1125,16 @@ class S {
     return Intl.message(
       'Status',
       name: 'history_TrangThai',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Appointment`
+  String get history_ChinhSua {
+    return Intl.message(
+      'Edit Appointment',
+      name: 'history_ChinhSua',
       desc: '',
       args: [],
     );

@@ -4,6 +4,7 @@ import 'package:doan_barberapp/components/style/elevation.dart';
 import 'package:doan_barberapp/components/widget/bottom_sheet.dart';
 import 'package:doan_barberapp/components/widget/icon.dart';
 import 'package:doan_barberapp/components/widget/text_button.dart';
+import 'package:doan_barberapp/project/booking/ui/BookingScreen.dart';
 import 'package:doan_barberapp/project/booking/widgets/CommonDialog.dart';
 import 'package:doan_barberapp/project/history/Widgets/BTSOption.dart';
 import 'package:doan_barberapp/project/history/Widgets/Filter.dart';
@@ -204,12 +205,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   FTextButton(
                     onPressed: () async {
                       await showFMBS(
-                        height: 200 / 896 * MediaQuery.of(context).size.height,
+                        height: 250 / 896 * MediaQuery.of(context).size.height,
                         context: context,
                         builder: (context) => BTSOption(
                           id: item.isCancelled,
                         ),
-                      ).then((value) {
+                      ).then((value) async {
                         if (value == Option.cancel) {
                           showDialog(
                             context: context,
@@ -253,6 +254,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               },
                             ),
                           );
+                        }
+                        if (value == Option.edit){
+                          LoadingCore.loadingDialogIos(context);
+                          final docs = await DataRepository().getBarbers();
+                          if (mounted) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => BookingScreen(
+                                  listBarber: docs,
+                                  isEdit: true,
+                                  appointmentItem: item,
+                                )));
+                          }
                         }
                       });
                     },

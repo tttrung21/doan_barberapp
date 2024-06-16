@@ -11,6 +11,7 @@ class DataRepository {
   final _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
   Future<void> bookAppointment(AppointmentItem appointment) async {
     try {
       await _firestore.collection('appointments').add({
@@ -20,14 +21,42 @@ class DataRepository {
         'bookedDate': appointment.bookedDate,
         'bookedTime': appointment.bookedTime,
         'services': appointment.services,
+        'servicesId': appointment.servicesId,
+        'servicesPrice': appointment.servicesPrice,
+        'servicesCode': appointment.servicesCode,
         'barberName': appointment.barberName,
         'estimatedFee': appointment.estimatedFee,
-        'isCancelled': appointment.isCancelled
+        'alarmId': appointment.alarmId,
+        'isCancelled': appointment.isCancelled,
       }).then((value) => value.update({'appointmentId': value.id}));
     } catch (e) {
       SnackBarCore.fail(title: e.toString());
       // Handle error
     }
+  }
+
+  Future<void> updateAppointment(AppointmentItem appointment) async {
+    try {
+      await _firestore.collection('appointments').doc(appointment.appointmentId).update({
+        // 'userId': appointment.userId,
+        'barberId': appointment.barberId,
+        // 'appointmentId': appointment.appointmentId,
+        'bookedDate': appointment.bookedDate,
+        'bookedTime': appointment.bookedTime,
+        'services': appointment.services,
+        'servicesId': appointment.servicesId,
+        'servicesPrice': appointment.servicesPrice,
+        'servicesCode': appointment.servicesCode,
+        'barberName': appointment.barberName,
+        'estimatedFee': appointment.estimatedFee,
+        'alarmId': appointment.alarmId,
+        // 'isCancelled': appointment.isCancelled,
+      });
+    } catch (e) {
+      SnackBarCore.fail(title: e.toString());
+      // Handle error
+    }
+    // final data = await _firestore.collection('appointments').doc(appointment.appointmentId).get();
   }
 
   Future<List<DropdownItem>> getServices() async {
@@ -36,8 +65,8 @@ class DataRepository {
         data.docs.map((doc) => doc.data()).toList());
     return dropdownItems;
   }
-  
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getBarbers()async{
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getBarbers() async {
     final barberDocs = await FirebaseFirestore.instance
         .collection('users')
         .where('role', isEqualTo: 'barber')
@@ -45,17 +74,19 @@ class DataRepository {
     return barberDocs.docs;
   }
 
-  Future<void> saveImage({File? file}) async{
+  Future<void> saveImage({File? file}) async {
     try {
       String? img;
-      if(file != null) {
-        await storeImgToGalleryStorage('imageGallery/${_firebaseAuth.currentUser?.uid}', file).then((value) {
-          if(value != null){
+      if (file != null) {
+        await storeImgToGalleryStorage(
+                'imageGallery/${_firebaseAuth.currentUser?.uid}', file)
+            .then((value) {
+          if (value != null) {
             img = value;
           }
         });
       }
-      await _firestore.collection('gallery').add({'image': img });
+      await _firestore.collection('gallery').add({'image': img});
     } catch (e) {
       rethrow;
     }

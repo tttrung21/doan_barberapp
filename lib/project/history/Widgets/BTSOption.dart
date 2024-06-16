@@ -9,7 +9,7 @@ import '../../../components/widget/filled_button.dart';
 import '../../../components/widget/icon.dart';
 import '../../../generated/l10n.dart';
 
-enum Option { cancel, resume }
+enum Option { cancel, resume, edit }
 
 class BTSOption extends StatelessWidget {
   const BTSOption({super.key, this.id});
@@ -126,6 +126,36 @@ class BTSOption extends StatelessWidget {
                       ],
                     ),
                   ),
+                if( id != 1)
+                CupertinoButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(Option.edit);
+                  },
+                  padding: EdgeInsets.zero,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: FColorSkin.primaryBackground,
+                          shape: BoxShape.circle,
+                        ),
+                        child: FIcon(
+                            size: 20,
+                            icon: FOutlined.e_edit,
+                            color: FColorSkin.primary),
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        S.of(context).history_ChinhSua,
+                        style: FTypoSkin.title6
+                            .copyWith(color: FColorSkin.label),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           )
