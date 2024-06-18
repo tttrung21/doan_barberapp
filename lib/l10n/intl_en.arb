@@ -42,6 +42,7 @@
   "common_BoLoc" : "Filter",
   "common_ThietLapLai" : "Reset",
   "common_ApDung" : "Apply",
+  "common_SDTGom10KyTu": "Phone numbers include 10 characters and start with a prefix available in Vietnam",
 
   "auth_DangNhap": "Log in",
   "auth_DangKy": "Sign up",

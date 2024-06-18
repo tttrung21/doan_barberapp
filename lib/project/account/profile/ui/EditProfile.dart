@@ -4,6 +4,7 @@ import 'package:doan_barberapp/components/widget/app_bar.dart';
 import 'package:doan_barberapp/shared/models/UserModel.dart';
 import 'package:doan_barberapp/shared/repository/UserRepository.dart';
 import 'package:doan_barberapp/utils/Loading.dart';
+import 'package:doan_barberapp/utils/Validate.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -184,7 +185,8 @@ class _EditProfileState extends State<EditProfile> {
                             hintText: S.of(context).profile_HintHoTen,
                             controller: nameTEC,
                             isRequire: false,
-                            isEnable: true),
+                            isEnable: true,
+                            ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -194,7 +196,13 @@ class _EditProfileState extends State<EditProfile> {
                             controller: phoneTEC,
                             isRequire: false,
                             isEnable: true,
-                            numbersOnly: true),
+                            numbersOnly: true,
+                            validator:(value) {
+                              if(value?.isNotEmpty ?? false) {
+                                return Validate.phoneValidate(value, context);
+                              }
+                              return null;
+                            }),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),

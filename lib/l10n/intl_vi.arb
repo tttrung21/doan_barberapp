@@ -42,6 +42,7 @@
   "common_BoLoc" : "Bộ lọc",
   "common_ThietLapLai" : "Thiết lập lại",
   "common_ApDung" : "Áp dụng",
+  "common_SDTGom10KyTu": "Số điện thoại gồm 10 ký tự là các đầu số ở Việt Nam",
 
   "auth_DangNhap" : "Đăng nhập",
   "auth_DangKy" : "Đăng ký",

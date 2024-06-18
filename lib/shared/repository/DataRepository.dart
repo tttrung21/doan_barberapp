@@ -74,7 +74,7 @@ class DataRepository {
     return barberDocs.docs;
   }
 
-  Future<void> saveImage({File? file}) async {
+  Future<void> saveImage({File? file,String? userId}) async {
     try {
       String? img;
       if (file != null) {
@@ -86,7 +86,7 @@ class DataRepository {
           }
         });
       }
-      await _firestore.collection('gallery').add({'image': img});
+      await _firestore.collection('gallery').add({'image': img,'uid':userId});
     } catch (e) {
       rethrow;
     }

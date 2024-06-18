@@ -41,7 +41,7 @@ class _ImageGalleryState extends State<ImageGallery> {
         if (mounted) {
           LoadingCore.loadingDialogIos(context);
         }
-        await DataRepository().saveImage(file: image);
+        await DataRepository().saveImage(file: image,userId: widget.user?.uid);
         if (mounted) {
           Navigator.of(context).pop();
         }

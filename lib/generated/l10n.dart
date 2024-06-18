@@ -480,6 +480,16 @@ class S {
     );
   }
 
+  /// `Phone numbers include 10 characters and start with a prefix available in Vietnam`
+  String get common_SDTGom10KyTu {
+    return Intl.message(
+      'Phone numbers include 10 characters and start with a prefix available in Vietnam',
+      name: 'common_SDTGom10KyTu',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Log in`
   String get auth_DangNhap {
     return Intl.message(

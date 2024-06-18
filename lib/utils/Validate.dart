@@ -5,18 +5,32 @@ import '../components/widget/form.dart';
 import '../generated/l10n.dart';
 
 class Validate {
-  // static FTextFieldStatus phoneValidate(String? value, BuildContext context) {
-  //   final regex = RegExp(r'^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$');
-  //   if (value!.trim().isEmpty) {
-  //     return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_ThieuThongTin);
-  //   } else {
-  //     if (!regex.hasMatch(value)) {
-  //       return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_SDTGom10KyTu);
-  //     }
-  //
-  //     return FTextFieldStatus(status: TFStatus.normal, message: null);
-  //   }
-  // }
+  static FTextFieldStatus nameValidate(String? value, BuildContext context) {
+    if (value?.trim().isEmpty ?? true) {
+      return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_ThieuThongTin);
+    } else {
+      if (!RegExp(r'^[A-Z0-9À-ỹ\s]+$').hasMatch(value!)) {
+        return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_ThongTinKhongHopLe);
+      }
+      if (RegExp(r'(\w)\1').hasMatch(value)) {
+        return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_ThongTinKhongHopLe);
+      }
+      return FTextFieldStatus(status: TFStatus.normal, message: null);
+    }
+  }
+
+  static FTextFieldStatus phoneValidate(String? value, BuildContext context) {
+    final regex = RegExp(r'^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$');
+    if (value!.trim().isEmpty) {
+      return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_ThieuThongTin);
+    } else {
+      if (!regex.hasMatch(value)) {
+        return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_SDTGom10KyTu);
+      }
+
+      return FTextFieldStatus(status: TFStatus.normal, message: null);
+    }
+  }
 
   static FTextFieldStatus emailValidate(String? value, BuildContext context) {
     final regex = RegExp(
@@ -31,22 +45,6 @@ class Validate {
       return FTextFieldStatus(status: TFStatus.normal, message: null);
     }
   }
-
-  // static FTextFieldStatus identityCardValidate(String? value, BuildContext context) {
-  //   const patttern = r'([0-9]$)';
-  //   final regex = RegExp(patttern);
-  //   if (!regex.hasMatch(value!)) {
-  //     return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_CMNDKhongDungDinhDang);
-  //   }
-  //   if (value.length != 9 && value.length != 12) {
-  //     if (value.trim().isEmpty) {
-  //       return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_ThieuThongTin);
-  //     }
-  //     return FTextFieldStatus(status: TFStatus.error, message: S.of(context).common_VuiLongNhapDung9Hoac12So);
-  //   } else {
-  //     return FTextFieldStatus(status: TFStatus.normal, message: null);
-  //   }
-  // }
 
   static FTextFieldStatus commonCheckNull(String? value, BuildContext context) {
     if (value?.trim().isEmpty ?? true) {
@@ -66,7 +64,7 @@ class Validate {
       }
       return FTextFieldStatus(
         status: TFStatus.error,
-        message: S.of(context).common_LoiMK8KyTu,
+        message: S.of(context).common_ThongTinKhongHopLe,
       );
     } else {
       return FTextFieldStatus(

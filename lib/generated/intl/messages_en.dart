@@ -112,6 +112,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "common_LoiXayRa":
             MessageLookupByLibrary.simpleMessage("Error occurred"),
         "common_QuayLai": MessageLookupByLibrary.simpleMessage("Back"),
+        "common_SDTGom10KyTu": MessageLookupByLibrary.simpleMessage(
+            "Phone numbers include 10 characters and start with a prefix available in Vietnam"),
         "common_Thang": MessageLookupByLibrary.simpleMessage("Month"),
         "common_Thang1": MessageLookupByLibrary.simpleMessage("January"),
         "common_Thang10": MessageLookupByLibrary.simpleMessage("October"),

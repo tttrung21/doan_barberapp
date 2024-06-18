@@ -110,6 +110,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "common_LoiXayRa":
             MessageLookupByLibrary.simpleMessage("Đã có lỗi xảy ra"),
         "common_QuayLai": MessageLookupByLibrary.simpleMessage("Quay lại"),
+        "common_SDTGom10KyTu": MessageLookupByLibrary.simpleMessage(
+            "Số điện thoại gồm 10 ký tự là các đầu số ở Việt Nam"),
         "common_Thang": MessageLookupByLibrary.simpleMessage("Tháng"),
         "common_Thang1": MessageLookupByLibrary.simpleMessage("Tháng 1"),
         "common_Thang10": MessageLookupByLibrary.simpleMessage("Tháng 10"),
